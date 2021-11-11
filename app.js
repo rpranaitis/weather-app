@@ -8,7 +8,7 @@ let weatherRouter = require('./routes/weather');
 
 let app = express();
 
-app.use(logger.logger('dev'));
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
