@@ -5,11 +5,183 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Hello</title>
-    <link href="css/app.css" rel="stylesheet">
+    <title>WeatherApp</title>
+    <link rel="stylesheet" href="css/weather-icons.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="https://kit.fontawesome.com/f688d35c35.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>Hello, world!</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="left-side col-3 py-4">
+            <div class="logo">
+                <img src="images/logo.png" alt="logo">
+            </div>
+            <div class="search">
+                <div class="input-group my-4">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    <input type="text" class="form-control" placeholder="Miestas" aria-label="City">
+                    <button class="btn bg-warning text-dark">Ieškoti</button>
+                </div>
+            </div>
+            <div class="cities d-flex flex-column align-items-center">
+                <p class="fw-bold">Pasirinkite iš esamų miestų:</p>
+                <ul class="d-flex flex-column align-items-start">
+                    <li><a href="#">Vilnius</a></li>
+                    <li><a href="#">Kaunas</a></li>
+                    <li><a href="#">Klaipėda</a></li>
+                    <li><a href="#">Šiauliai</a></li>
+                    <li><a href="#">Panevėžys</a></li>
+                    <li><a href="#">Marijampolė</a></li>
+                    <li><a href="#">Alytus</a></li>
+                    <li><a href="#">Telšiai</a></li>
+                    <li><a href="#">Utena</a></li>
+                    <li><a href="#">Tauragė</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="right-side col-9 p-4">
+            <p class="fs-3 text-center mb-4"><span class="fw-bold"><i class="fas fa-location-arrow"></i> Klaipėda</span> (Klaipėdos miesto savivaldybė)</p>
+            <div class="temperature-block px-3 py-4">
+                <div class="row">
+                    <p class="text-center m-0 pb-3 fw-bold">Temperatūra</p>
+                    <div class="col-1 d-flex flex-column align-items-center">
+                        <div class="time">
+                            <p>Now</p>
+                        </div>
+                        <div class="icon">
+                            <p class="fs-3 text-warning"><i class="wi wi-night-sleet"></i></p>
+                        </div>
+                        <div class="temperature">
+                            <p>28°</p>
+                        </div>
+                    </div>
+                    <div class="col-1 d-flex flex-column align-items-center">
+                        <div class="time">
+                            <p>Now</p>
+                        </div>
+                        <div class="icon">
+                            <p class="fs-3 text-warning"><i class="wi wi-night-sleet"></i></p>
+                        </div>
+                        <div class="temperature">
+                            <p>28°</p>
+                        </div>
+                    </div>
+                    <div class="col-1 d-flex flex-column align-items-center">
+                        <div class="time">
+                            <p>Now</p>
+                        </div>
+                        <div class="icon">
+                            <p class="fs-3 text-warning"><i class="wi wi-night-sleet"></i></p>
+                        </div>
+                        <div class="temperature">
+                            <p>28°</p>
+                        </div>
+                    </div>
+                    <div class="col-1 d-flex flex-column align-items-center">
+                        <div class="time">
+                            <p>Now</p>
+                        </div>
+                        <div class="icon">
+                            <p class="fs-3 text-warning"><i class="wi wi-night-sleet"></i></p>
+                        </div>
+                        <div class="temperature">
+                            <p>28°</p>
+                        </div>
+                    </div>
+                    <div class="col-1 d-flex flex-column align-items-center">
+                        <div class="time">
+                            <p>Now</p>
+                        </div>
+                        <div class="icon">
+                            <p class="fs-3 text-warning"><i class="wi wi-night-sleet"></i></p>
+                        </div>
+                        <div class="temperature">
+                            <p>28°</p>
+                        </div>
+                    </div>
+                    <div class="col-1 d-flex flex-column align-items-center">
+                        <div class="time">
+                            <p>Now</p>
+                        </div>
+                        <div class="icon">
+                            <p class="fs-3 text-warning"><i class="wi wi-night-sleet"></i></p>
+                        </div>
+                        <div class="temperature">
+                            <p>28°</p>
+                        </div>
+                    </div>
+                    <div class="col-1 d-flex flex-column align-items-center">
+                        <div class="time">
+                            <p>Now</p>
+                        </div>
+                        <div class="icon">
+                            <p class="fs-3 text-warning"><i class="wi wi-night-sleet"></i></p>
+                        </div>
+                        <div class="temperature">
+                            <p>28°</p>
+                        </div>
+                    </div>
+                    <div class="col-1 d-flex flex-column align-items-center">
+                        <div class="time">
+                            <p>Now</p>
+                        </div>
+                        <div class="icon">
+                            <p class="fs-3 text-warning"><i class="wi wi-night-sleet"></i></p>
+                        </div>
+                        <div class="temperature">
+                            <p>28°</p>
+                        </div>
+                    </div>
+                    <div class="col-1 d-flex flex-column align-items-center">
+                        <div class="time">
+                            <p>Now</p>
+                        </div>
+                        <div class="icon">
+                            <p class="fs-3 text-warning"><i class="wi wi-night-sleet"></i></p>
+                        </div>
+                        <div class="temperature">
+                            <p>28°</p>
+                        </div>
+                    </div>
+                    <div class="col-1 d-flex flex-column align-items-center">
+                        <div class="time">
+                            <p>Now</p>
+                        </div>
+                        <div class="icon">
+                            <p class="fs-3 text-warning"><i class="wi wi-night-sleet"></i></p>
+                        </div>
+                        <div class="temperature">
+                            <p>28°</p>
+                        </div>
+                    </div>
+                    <div class="col-1 d-flex flex-column align-items-center">
+                        <div class="time">
+                            <p>Now</p>
+                        </div>
+                        <div class="icon">
+                            <p class="fs-3 text-warning"><i class="wi wi-night-sleet"></i></p>
+                        </div>
+                        <div class="temperature">
+                            <p>28°</p>
+                        </div>
+                    </div>
+                    <div class="col-1 d-flex flex-column align-items-center">
+                        <div class="time">
+                            <p>Now</p>
+                        </div>
+                        <div class="icon">
+                            <p class="fs-3 text-warning"><i class="wi wi-night-sleet"></i></p>
+                        </div>
+                        <div class="temperature">
+                            <p>28°</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="js/app.js"></script>
 </body>
 </html>
