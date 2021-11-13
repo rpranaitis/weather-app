@@ -1,6 +1,16 @@
 import Temperature from "./Temperature";
+import Weather from "./Weather";
 
 window.bootstrap = require('bootstrap');
+
+Date.prototype.addHours = function(h) {
+    this.setHours(this.getHours() + h);
+
+    return this;
+}
+
+let weather = new Weather();
+console.log(weather.getFutureDateTimes());
 
 function fetchAvailableCities() {
     return fetch(`./weather/places`)

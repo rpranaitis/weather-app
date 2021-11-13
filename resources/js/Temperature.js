@@ -1,7 +1,7 @@
 import Weather from "./Weather";
 
 export default class Temperature extends Weather {
-    icons = {
+    conditionIcons = {
         'clear':            '<i class="wi wi-day-sunny"></i>',
         'isolated-clouds':  '<i class="wi wi-day-cloudy"></i>',
         'scattered-clouds': '<i class="wi wi-day-sunny-overcast"></i>',
@@ -18,14 +18,14 @@ export default class Temperature extends Weather {
     }
 
     updateTemperatureBlock(data) {
-        let skipAmount = this.getSkipAmount(data.forecastCreationTimeUtc);
+        let filteredTimestamps = this.getFilteredTimestamps(data);
 
-        this.updateTimes(data, skipAmount);
-        this.updateIcons(data, skipAmount);
-        this.updateTemperatures(data, skipAmount);
+        this.updateTimes(filteredTimestamps);
+        this.updateIcons(filteredTimestamps);
+        this.updateTemperatures(filteredTimestamps);
     }
 
-    updateTimes(data, skipAmount) {
+    updateTimes(filteredTimestamps) {
         let tempTimes = document.querySelectorAll('.temp-blocks .time p')
 
         for (let i = 0; i < tempTimes.length; i++) {
@@ -34,31 +34,31 @@ export default class Temperature extends Weather {
             if (i === 0) {
                 tempTime.textContent = 'Dabar';
             } else {
-                let datetime = data.forecastTimestamps[i + skipAmount].forecastTimeUtc;
+                let dateTime = filteredTimestamps[i].forecastTimeUtc;
 
-                tempTime.textContent = this.exctractTime(datetime);
+                tempTime.textContent = this.exctractTime(dateTime);
             }
         }
     }
 
-    updateIcons(data, skipAmount) {
+    updateIcons(filteredTimestamps) {
         let tempIcons = document.querySelectorAll('.temp-blocks .icon p')
 
         for (let i = 0; i < tempIcons.length; i++) {
             let temIcon = tempIcons[i];
-            let condition = data.forecastTimestamps[i + skipAmount].conditionCode;
+            let condition = filteredTimestamps[i].conditionCode;
 
-            temIcon.innerHTML = this.icons[condition];
+            temIcon.innerHTML = this.conditionIcons[condition];
         }
     }
 
-    updateTemperatures(data, skipAmount) {
+    updateTemperatures(filteredTimestamps) {
         let tempTemperatures = document.querySelectorAll('.temp-blocks .temperature p')
 
         for (let i = 0; i < tempTemperatures.length; i++) {
             let tempTemperature = tempTemperatures[i];
 
-            tempTemperature.textContent = data.forecastTimestamps[i + skipAmount].airTemperature + '°';
+            tempTemperature.textContent = filteredTimestamps[i].airTemperature + '°';
         }
     }
 
@@ -66,7 +66,7 @@ export default class Temperature extends Weather {
         return input.substr(11, 5);
     }
 
-    get icons() {
-        return this.icons;
+    get conditionIcons() {
+        return this.conditionIcons;
     }
 }
