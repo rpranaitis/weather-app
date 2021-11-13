@@ -14,9 +14,9 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="left-side col-3 py-4">
+        <div class="left-side col-12 col-lg-3 pt-4 pb-5">
             <div class="logo">
-                <img src="images/logo.png" alt="logo">
+                <a href="/"><img src="images/logo.png" alt="logo"></a>
             </div>
             <div class="search">
                 <div class="input-group my-4">
@@ -25,33 +25,37 @@
                     <button class="btn bg-warning text-dark">Ieškoti</button>
                 </div>
             </div>
-            <div class="cities d-flex flex-column align-items-center">
+            <div class="cities">
                 <p class="fw-bold">Pasirinkite iš esamų miestų:</p>
-                <ul class="d-flex flex-column align-items-start">
-                    <li><a href="#">Vilnius</a></li>
-                    <li><a href="#">Kaunas</a></li>
-                    <li><a href="#">Klaipėda</a></li>
-                    <li><a href="#">Šiauliai</a></li>
-                    <li><a href="#">Panevėžys</a></li>
-                    <li><a href="#">Marijampolė</a></li>
-                    <li><a href="#">Alytus</a></li>
-                    <li><a href="#">Telšiai</a></li>
-                    <li><a href="#">Utena</a></li>
-                    <li><a href="#">Tauragė</a></li>
-                </ul>
+                <div class="cities-wrap d-flex flex-column align-items-center justify-content-center">
+                    <ul class="d-flex flex-column flex-sm-row flex-lg-column align-items-start">
+                        <li><a href="#">Vilnius</a></li>
+                        <li><a href="#">Kaunas</a></li>
+                        <li><a href="#">Klaipėda</a></li>
+                        <li><a href="#">Šiauliai</a></li>
+                        <li><a href="#">Panevėžys</a></li>
+                    </ul>
+                    <ul class="d-flex flex-column flex-sm-row flex-lg-column align-items-start">
+                        <li><a href="#">Marijampolė</a></li>
+                        <li><a href="#">Alytus</a></li>
+                        <li><a href="#">Telšiai</a></li>
+                        <li><a href="#">Utena</a></li>
+                        <li><a href="#">Tauragė</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="right-side col-9 p-4">
+        <div class="right-side col-12 col-lg-9 pb-5">
             <p class="fs-3 text-center mb-2"><span class="fw-bold"><i class="fas fa-location-arrow"></i> Klaipėda</span></p>
             <p class="fs-5 text-center mb-4">Klaipėdos miesto savivaldybė</p>
             <div class="row">
                 <div class="col-12">
-                    <div class="block px-3 py-4">
+                    <div class="block px-3 pt-4">
                         <div class="row">
                             <p class="text-center m-0 pb-3 fw-bold">Temperatūra</p>
-                            <div class="col-1 d-flex flex-column align-items-center">
+                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
-                                    <p class="fw-bold">Now</p>
+                                    <p class="fw-bold">Dabar</p>
                                 </div>
                                 <div class="icon">
                                     <p class="fs-3 text-warning"><i class="wi wi-night-sleet"></i></p>
@@ -60,7 +64,7 @@
                                     <p>5°</p>
                                 </div>
                             </div>
-                            <div class="col-1 d-flex flex-column align-items-center">
+                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>19:00</p>
                                 </div>
@@ -71,7 +75,7 @@
                                     <p>5°</p>
                                 </div>
                             </div>
-                            <div class="col-1 d-flex flex-column align-items-center">
+                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>20:00</p>
                                 </div>
@@ -82,7 +86,7 @@
                                     <p>4°</p>
                                 </div>
                             </div>
-                            <div class="col-1 d-flex flex-column align-items-center">
+                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>21:00</p>
                                 </div>
@@ -93,7 +97,7 @@
                                     <p>4°</p>
                                 </div>
                             </div>
-                            <div class="col-1 d-flex flex-column align-items-center">
+                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>22:00</p>
                                 </div>
@@ -104,7 +108,7 @@
                                     <p>4°</p>
                                 </div>
                             </div>
-                            <div class="col-1 d-flex flex-column align-items-center">
+                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>23:00</p>
                                 </div>
@@ -115,7 +119,7 @@
                                     <p>3°</p>
                                 </div>
                             </div>
-                            <div class="col-1 d-flex flex-column align-items-center">
+                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>00:00</p>
                                 </div>
@@ -126,7 +130,7 @@
                                     <p>2°</p>
                                 </div>
                             </div>
-                            <div class="col-1 d-flex flex-column align-items-center">
+                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>01:00</p>
                                 </div>
@@ -137,7 +141,7 @@
                                     <p>2°</p>
                                 </div>
                             </div>
-                            <div class="col-1 d-flex flex-column align-items-center">
+                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>02:00</p>
                                 </div>
@@ -148,7 +152,7 @@
                                     <p>2°</p>
                                 </div>
                             </div>
-                            <div class="col-1 d-flex flex-column align-items-center">
+                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>03:00</p>
                                 </div>
@@ -159,7 +163,7 @@
                                     <p>2°</p>
                                 </div>
                             </div>
-                            <div class="col-1 d-flex flex-column align-items-center">
+                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>04:00</p>
                                 </div>
@@ -170,7 +174,7 @@
                                     <p>1°</p>
                                 </div>
                             </div>
-                            <div class="col-1 d-flex flex-column align-items-center">
+                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>05:00</p>
                                 </div>
@@ -186,7 +190,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-4">
+                <div class="col-12 col-sm-6 col-md-4 col-md-4">
                     <div class="wind-speed block px-3 py-4 mt-4">
                         <div class="header d-flex flex-column justify-content-center align-items-center">
                             <div class="icon">
@@ -197,11 +201,11 @@
                             </div>
                         </div>
                         <div class="body d-flex justify-content-center">
-                            <p class="fs-1 fw-bold m-0">19 m/s</p>
+                            <p class="fs-2 fw-bold m-0">19 m/s</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-12 col-sm-6 col-md-4 col-md-4">
                     <div class="wind-direction block px-3 py-4 mt-4">
                         <div class="header d-flex flex-column justify-content-center align-items-center">
                             <div class="icon">
@@ -212,11 +216,11 @@
                             </div>
                         </div>
                         <div class="body d-flex justify-content-center">
-                            <p class="fs-1 fw-bold m-0">268°</p>
+                            <p class="fs-2 fw-bold m-0">268°</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-12 col-sm-6 col-md-4 col-md-4">
                     <div class="cloud-cover block px-3 py-4 mt-4">
                         <div class="header d-flex flex-column justify-content-center align-items-center">
                             <div class="icon">
@@ -227,42 +231,42 @@
                             </div>
                         </div>
                         <div class="body d-flex justify-content-center">
-                            <p class="fs-1 fw-bold m-0">0</p>
+                            <p class="fs-2 fw-bold m-0">0</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="sea-level-pressure block px-3 py-4 mt-4">
+                <div class="col-12 col-sm-6 col-md-4 col-md-4">
+                    <div class="pressure block px-3 py-4 mt-4">
                         <div class="header d-flex flex-column justify-content-center align-items-center">
                             <div class="icon">
                                 <span class="fs-1"><i class="wi wi-barometer"></i></span>
                             </div>
                             <div class="title">
-                                <p class="m-0 mt-2">Slėgis jūros lygyje</p>
+                                <p class="m-0 mt-2">Slėgis</p>
                             </div>
                         </div>
                         <div class="body d-flex justify-content-center">
-                            <p class="fs-1 fw-bold m-0">1020 hPa</p>
+                            <p class="fs-2 fw-bold m-0">1020 hPa</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="relative-humidity block px-3 py-4 mt-4">
+                <div class="col-12 col-sm-6 col-md-4 col-md-4">
+                    <div class="humidity block px-3 py-4 mt-4">
                         <div class="header d-flex flex-column justify-content-center align-items-center">
                             <div class="icon">
                                 <span class="fs-1"><i class="wi wi-humidity"></i></span>
                             </div>
                             <div class="title">
-                                <p class="m-0 mt-2">Santykinė oro drėgmė</p>
+                                <p class="m-0 mt-2">Oro drėgmė</p>
                             </div>
                         </div>
                         <div class="body d-flex justify-content-center">
-                            <p class="fs-1 fw-bold m-0">96%</p>
+                            <p class="fs-2 fw-bold m-0">96%</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="total-precipitation block px-3 py-4 mt-4">
+                <div class="col-12 col-sm-6 col-md-4 col-md-4">
+                    <div class="precipitation block px-3 py-4 mt-4">
                         <div class="header d-flex flex-column justify-content-center align-items-center">
                             <div class="icon">
                                 <span class="fs-1"><i class="wi wi-flood"></i></span>
@@ -272,7 +276,7 @@
                             </div>
                         </div>
                         <div class="body d-flex justify-content-center">
-                            <p class="fs-1 fw-bold m-0">0 mm</p>
+                            <p class="fs-2 fw-bold m-0">0 mm</p>
                         </div>
                     </div>
                 </div>
