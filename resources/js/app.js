@@ -1,5 +1,4 @@
 import Temperature from "./Temperature";
-import Weather from "./Weather";
 
 window.bootstrap = require('bootstrap');
 
@@ -7,6 +6,26 @@ Date.prototype.addHours = function(h) {
     this.setHours(this.getHours() + h);
 
     return this;
+}
+
+function getFilteredTimestamps(data) {
+    let futureDateTimes = getFutureDateTimes();
+
+    return data.forecastTimestamps.filter(x => futureDateTimes.includes(x.forecastTimeUtc));
+}
+
+function getFutureDateTimes() {
+    let dateTimes = [];
+
+    for (let i = 0; i < 12; i++) {
+        let addedHours = new Date().addHours(i);
+        let futureDate = addedHours.toLocaleDateString('en-CA');
+        let futureTime = addedHours.toLocaleTimeString().slice(0, 2) + ':00:00';
+
+        dateTimes.push(`${futureDate} ${futureTime}`)
+    }
+
+    return dateTimes;
 }
 
 function fetchAvailableCities() {
@@ -21,7 +40,9 @@ function fetchWeatherByCity(city) {
 
 fetchWeatherByCity('Grinkiskis').then(response => {
     let temperature = new Temperature();
-    temperature.updateTemperatureBlock(response);
+    let filteredTimestamps = getFilteredTimestamps(response);
+
+    temperature.updateTemperatureBlock(filteredTimestamps);
 });
 
 

@@ -1,6 +1,4 @@
-import Weather from "./Weather";
-
-export default class Temperature extends Weather {
+export default class Temperature {
     conditionIcons = {
         'clear':            '<i class="wi wi-day-sunny"></i>',
         'isolated-clouds':  '<i class="wi wi-day-cloudy"></i>',
@@ -18,14 +16,12 @@ export default class Temperature extends Weather {
     }
 
     updateTemperatureBlock(data) {
-        let filteredTimestamps = this.getFilteredTimestamps(data);
-
-        this.updateTimes(filteredTimestamps);
-        this.updateIcons(filteredTimestamps);
-        this.updateTemperatures(filteredTimestamps);
+        this.updateTimes(data);
+        this.updateIcons(data);
+        this.updateTemperatures(data);
     }
 
-    updateTimes(filteredTimestamps) {
+    updateTimes(data) {
         let tempTimes = document.querySelectorAll('.temp-blocks .time p')
 
         for (let i = 0; i < tempTimes.length; i++) {
@@ -34,31 +30,31 @@ export default class Temperature extends Weather {
             if (i === 0) {
                 tempTime.textContent = 'Dabar';
             } else {
-                let dateTime = filteredTimestamps[i].forecastTimeUtc;
+                let dateTime = data[i].forecastTimeUtc;
 
                 tempTime.textContent = this.exctractTime(dateTime);
             }
         }
     }
 
-    updateIcons(filteredTimestamps) {
+    updateIcons(data) {
         let tempIcons = document.querySelectorAll('.temp-blocks .icon p')
 
         for (let i = 0; i < tempIcons.length; i++) {
             let temIcon = tempIcons[i];
-            let condition = filteredTimestamps[i].conditionCode;
+            let condition = data[i].conditionCode;
 
             temIcon.innerHTML = this.conditionIcons[condition];
         }
     }
 
-    updateTemperatures(filteredTimestamps) {
+    updateTemperatures(data) {
         let tempTemperatures = document.querySelectorAll('.temp-blocks .temperature p')
 
         for (let i = 0; i < tempTemperatures.length; i++) {
             let tempTemperature = tempTemperatures[i];
 
-            tempTemperature.textContent = filteredTimestamps[i].airTemperature + '°';
+            tempTemperature.textContent = data[i].airTemperature + '°';
         }
     }
 
