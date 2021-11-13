@@ -9,6 +9,81 @@ Date.prototype.addHours = function(h) {
     return this;
 }
 
+let cityLinks = document.querySelectorAll('.city-links');
+let cityInput = document.querySelector('#cityInput');
+let searchButton = document.querySelector('#searchButton');
+
+let weatherWrapper = document.querySelector('.weather-wrapper');
+let messageBox = document.querySelector('#messageBox');
+let message = document.querySelector('#messageBox p');
+
+for (let cityLink of cityLinks) {
+    cityLink.addEventListener('click', () => {
+        updateBlocksByCity(cityLink.textContent);
+    });
+}
+
+searchButton.addEventListener('click', () => {
+    updateBlocksByCity(cityInput.value);
+});
+
+function fetchAvailableCities() {
+    return fetch(`./weather/places`)
+        .then(response => response.json());
+}
+
+function fetchWeatherByCity(city) {
+    return fetch(`./weather/places/${city}`)
+        .then(response => response.json());
+}
+
+function updateBlocksByCity(city) {
+    weatherWrapper.classList.toggle('d-none');
+
+    messageBox.classList.toggle('d-none');
+    messageBox.classList.toggle('d-flex');
+
+    message.textContent = 'Kraunasi...'
+
+    city = city.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
+    fetchAvailableCities().then(response => {
+        for (let availableCity of response) {
+            if (city === availableCity) {
+                return updateBlocks(city);
+            }
+        }
+    });
+
+    messageBox.classList.toggle('d-none');
+    messageBox.classList.toggle('d-flex');
+    message.textContent = 'Tokio miesto duomenų bazėje nėra.'
+
+}
+
+function updateBlocks(city) {
+    fetchWeatherByCity(city).then(response => {
+        let filteredTimestamps = getFilteredTimestamps(response);
+
+        let cityElement = document.querySelector('#city span');
+        cityElement.innerHTML = `<i class="fas fa-location-arrow"></i> ${response.place.name}`
+
+        let municipalityElement = document.querySelector('#municipality')
+        municipalityElement.textContent = response.place.administrativeDivision;
+
+        let temperature = new Temperature();
+        temperature.updateTemperatureBlock(filteredTimestamps);
+
+        let otherWeatherParameters = new OtherWeatherParameters();
+        otherWeatherParameters.updateAllParameters(filteredTimestamps);
+    });
+
+    weatherWrapper.classList.toggle('d-none');
+
+    messageBox.classList.toggle('d-none');
+    messageBox.classList.toggle('d-flex');
+}
+
 function getFilteredTimestamps(data) {
     let futureDateTimes = getFutureDateTimes();
 
@@ -28,38 +103,3 @@ function getFutureDateTimes() {
 
     return dateTimes;
 }
-
-function fetchAvailableCities() {
-    return fetch(`./weather/places`)
-        .then(response => response.json());
-}
-
-function fetchWeatherByCity(city) {
-    return fetch(`./weather/places/${city}`)
-        .then(response => response.json());
-}
-
-fetchWeatherByCity('Grinkiskis').then(response => {
-    let filteredTimestamps = getFilteredTimestamps(response);
-
-    let temperature = new Temperature();
-    temperature.updateTemperatureBlock(filteredTimestamps);
-
-    let otherWeatherParameters = new OtherWeatherParameters();
-    otherWeatherParameters.updateAllParameters(filteredTimestamps);
-});
-
-
-let cityLinks = document.querySelectorAll('.city-links');
-let cityInput = document.querySelector('#cityInput');
-let searchButton = document.querySelector('#searchButton');
-
-for (let cityLink of cityLinks) {
-    cityLink.addEventListener('click', () => {
-       console.log(cityLink.textContent);
-    });
-}
-
-searchButton.addEventListener('click', () => {
-    console.log(cityInput.value);
-});

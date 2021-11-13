@@ -1,5 +1,6 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~weather-icons/sass/weather-icons';
+//@import '~weather-icons/sass/weather-icons-wind';
 
 body {
     font-size: 20px;
@@ -24,6 +25,10 @@ body {
     background-color: #ebebeb;;
     color: #354256;
     padding: 2.2rem 1.5rem;
+}
+
+#messageBox {
+    height: 100%;
 }
 
 .form-control {
@@ -105,6 +110,10 @@ body {
 }
 
 @media only screen and (max-width: 992px) {
+    body {
+        background-color: #ebebeb;
+    }
+
     .logo img {
         width: 30%;
     }

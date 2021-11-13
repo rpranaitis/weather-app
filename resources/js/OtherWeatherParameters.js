@@ -15,9 +15,15 @@ export default class OtherWeatherParameters {
     }
 
     updateWindDirection(data) {
-        let element = document.querySelector('.wind-direction .body p');
+        let degrees = document.querySelector('.wind-direction .body p');
+        let icon = document.querySelector('.wind-direction .header .icon span');
+        let possibleIconDegrees = [0, 23, 45, 68, 90, 113, 135, 158, 180, 203, 225, 248, 270, 293, 313, 336];
+        let closestDegree = possibleIconDegrees.reduce((previous, current) => {
+            return Math.abs(current - data[0].windDirection) < Math.abs(previous - data[0].windDirection) ? current : previous
+        });
 
-        element.textContent = data[0].windDirection + ' °';
+        degrees.textContent = data[0].windDirection + ' °';
+        icon.innerHTML = `<i class="wi wi-wind-direction"></i>`;
     }
 
     updateCloudCover(data) {
