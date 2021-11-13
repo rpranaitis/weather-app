@@ -1,4 +1,5 @@
 import Temperature from "./Temperature";
+import OtherWeatherParameters from "./OtherWeatherParameters";
 
 window.bootstrap = require('bootstrap');
 
@@ -39,10 +40,13 @@ function fetchWeatherByCity(city) {
 }
 
 fetchWeatherByCity('Grinkiskis').then(response => {
-    let temperature = new Temperature();
     let filteredTimestamps = getFilteredTimestamps(response);
 
+    let temperature = new Temperature();
     temperature.updateTemperatureBlock(filteredTimestamps);
+
+    let otherWeatherParameters = new OtherWeatherParameters();
+    otherWeatherParameters.updateAllParameters(filteredTimestamps);
 });
 
 
