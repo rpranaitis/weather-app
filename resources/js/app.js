@@ -9,9 +9,6 @@ Date.prototype.addHours = function(h) {
     return this;
 }
 
-let weather = new Weather();
-console.log(weather.getFutureDateTimes());
-
 function fetchAvailableCities() {
     return fetch(`./weather/places`)
         .then(response => response.json());
