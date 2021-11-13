@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WeatherApp</title>
     <link rel="icon" type="image/png" href="images/favicon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.12/css/weather-icons.min.css">
     <link rel="stylesheet" href="css/app.css">
     <script src="https://kit.fontawesome.com/f688d35c35.js" crossorigin="anonymous"></script>
 </head>
@@ -21,26 +20,26 @@
             <div class="search">
                 <div class="input-group my-4">
                     <span class="input-group-text"><i class="fas fa-search"></i></span>
-                    <input type="text" class="form-control" placeholder="Miestas" aria-label="City">
-                    <button class="btn bg-warning text-dark">Ieškoti</button>
+                    <input type="text" class="form-control" id="cityInput" placeholder="Miestas" aria-label="City">
+                    <button class="btn bg-warning text-dark" id="searchButton">Ieškoti</button>
                 </div>
             </div>
             <div class="cities">
                 <p class="fw-bold">Pasirinkite iš esamų miestų:</p>
                 <div class="cities-wrap d-flex flex-column align-items-center justify-content-center">
                     <ul class="d-flex flex-column flex-sm-row flex-lg-column align-items-start">
-                        <li><a href="#">Vilnius</a></li>
-                        <li><a href="#">Kaunas</a></li>
-                        <li><a href="#">Klaipėda</a></li>
-                        <li><a href="#">Šiauliai</a></li>
-                        <li><a href="#">Panevėžys</a></li>
+                        <li><a class="city-links" href="#">Vilnius</a></li>
+                        <li><a class="city-links" href="#">Kaunas</a></li>
+                        <li><a class="city-links" href="#">Klaipėda</a></li>
+                        <li><a class="city-links" href="#">Šiauliai</a></li>
+                        <li><a class="city-links" href="#">Panevėžys</a></li>
                     </ul>
                     <ul class="d-flex flex-column flex-sm-row flex-lg-column align-items-start">
-                        <li><a href="#">Marijampolė</a></li>
-                        <li><a href="#">Alytus</a></li>
-                        <li><a href="#">Telšiai</a></li>
-                        <li><a href="#">Utena</a></li>
-                        <li><a href="#">Tauragė</a></li>
+                        <li><a class="city-links" href="#">Marijampolė</a></li>
+                        <li><a class="city-links" href="#">Alytus</a></li>
+                        <li><a class="city-links" href="#">Telšiai</a></li>
+                        <li><a class="city-links" href="#">Utena</a></li>
+                        <li><a class="city-links" href="#">Tauragė</a></li>
                     </ul>
                 </div>
             </div>
@@ -53,7 +52,7 @@
                     <div class="block px-3 pt-4">
                         <div class="row">
                             <p class="text-center m-0 pb-3 fw-bold">Temperatūra</p>
-                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
+                            <div class="temp-blocks col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p class="fw-bold">Dabar</p>
                                 </div>
@@ -64,7 +63,7 @@
                                     <p>5°</p>
                                 </div>
                             </div>
-                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
+                            <div class="temp-blocks col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>19:00</p>
                                 </div>
@@ -75,7 +74,7 @@
                                     <p>5°</p>
                                 </div>
                             </div>
-                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
+                            <div class="temp-blocks col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>20:00</p>
                                 </div>
@@ -86,7 +85,7 @@
                                     <p>4°</p>
                                 </div>
                             </div>
-                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
+                            <div class="temp-blocks col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>21:00</p>
                                 </div>
@@ -97,7 +96,7 @@
                                     <p>4°</p>
                                 </div>
                             </div>
-                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
+                            <div class="temp-blocks col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>22:00</p>
                                 </div>
@@ -108,7 +107,7 @@
                                     <p>4°</p>
                                 </div>
                             </div>
-                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
+                            <div class="temp-blocks col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>23:00</p>
                                 </div>
@@ -119,7 +118,7 @@
                                     <p>3°</p>
                                 </div>
                             </div>
-                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
+                            <div class="temp-blocks col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>00:00</p>
                                 </div>
@@ -130,7 +129,7 @@
                                     <p>2°</p>
                                 </div>
                             </div>
-                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
+                            <div class="temp-blocks col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>01:00</p>
                                 </div>
@@ -141,7 +140,7 @@
                                     <p>2°</p>
                                 </div>
                             </div>
-                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
+                            <div class="temp-blocks col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>02:00</p>
                                 </div>
@@ -152,7 +151,7 @@
                                     <p>2°</p>
                                 </div>
                             </div>
-                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
+                            <div class="temp-blocks col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>03:00</p>
                                 </div>
@@ -163,7 +162,7 @@
                                     <p>2°</p>
                                 </div>
                             </div>
-                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
+                            <div class="temp-blocks col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>04:00</p>
                                 </div>
@@ -174,7 +173,7 @@
                                     <p>1°</p>
                                 </div>
                             </div>
-                            <div class="col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
+                            <div class="temp-blocks col-4 col-sm-3 col-md-2 col-lg-1 d-flex flex-column align-items-center">
                                 <div class="time">
                                     <p>05:00</p>
                                 </div>

@@ -9,4 +9,7 @@ if (mix.inProduction()) {
 }
 
 mix.js('resources/js/app.js', 'public/js/app.js');
+mix.js('resources/js/Weather.js', 'public/js/Weather.js');
+mix.js('resources/js/Temperature.js', 'public/js/Temperature.js');
+
 mix.sass('resources/sass/app.scss', 'public/css/app.css');

@@ -30,7 +30,8 @@
     "http-errors": "^1.8.0",
     "laravel-mix": "^6.0.6",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "weather-icons": "github:erikflowers/weather-icons"
   },
   "devDependencies": {
     "resolve-url-loader": "^4.0.0",
