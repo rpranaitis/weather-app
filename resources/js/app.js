@@ -51,7 +51,6 @@ function fetchWeatherByCity(city) {
 
 (function () {
     updateBlocksByCity('Vilnius');
-    modal.toggle();
 })();
 
 function updateBlocksByCity(city) {
@@ -67,6 +66,11 @@ function updateBlocksByCity(city) {
                 return updateBlocks(city);
             }
         }
+
+        toggleSpinnerBlock();
+        modal.toggle();
+        cityInput.value = '';
+        cityInput.disabled = false;
     });
 }
 
