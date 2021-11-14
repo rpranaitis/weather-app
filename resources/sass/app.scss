@@ -20,7 +20,7 @@ body {
     color: #354256;
     height: 100vh;
     position: absolute;
-    z-index: 3;
+    z-index: 9999;
 }
 
 .left-side {
@@ -107,6 +107,36 @@ body {
 
 .temperature p {
     margin-bottom: 0;
+}
+
+.modal-header {
+    background-color: #ff5050;
+    color: white;
+    border-bottom: 0 none;
+}
+
+.modal-content {
+    border: 0;
+}
+
+.modal-footer {
+    justify-content: center;
+    padding-top: 0;
+    padding-bottom: 30px;
+    border-top: 0 none;
+}
+
+.modal-footer button {
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 0.375rem 2.3rem;
+    background-color: #eeb711;
+}
+
+.modal-footer button:hover {
+    background-color: #eda645;
+    color: white;
 }
 
 @media only screen and (min-width: 992px) {

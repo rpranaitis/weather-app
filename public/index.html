@@ -14,7 +14,24 @@
 <div class="container-fluid">
     <div class="row">
         <div class="spinner-block d-flex justify-content-center align-items-center">
-            <p class="m-0 fs-1"><i class="fa-spin fas fa-spinner"></i></p>
+            <p class="m-0 fs-1"><i class="fa-spin fas fa-sync-alt"></i></p>
+        </div>
+        <div class="modal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center my-3 fs-3 fw-bold">Klaida!</p>
+                        <p class="text-center my-2">Tokio miesto duomenų bazėje nėra.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Uždaryti</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="left-side col-12 col-lg-3 pt-4 pb-5">
             <div class="logo">

@@ -19,6 +19,8 @@ let spinnerBlock = document.querySelector('.spinner-block');
 let cityElement = document.querySelector('#city span');
 let municipalityElement = document.querySelector('#municipality')
 
+let modal = new bootstrap.Modal(document.querySelector('.modal'), {})
+
 for (let cityLink of cityLinks) {
     cityLink.addEventListener('click', () => {
         updateBlocksByCity(cityLink.textContent);
@@ -27,6 +29,14 @@ for (let cityLink of cityLinks) {
 
 searchButton.addEventListener('click', () => {
     updateBlocksByCity(cityInput.value);
+});
+
+cityInput.addEventListener('keyup', event => {
+   if (event.keyCode === 13) {
+       event.preventDefault();
+       cityInput.disabled = true;
+       searchButton.click();
+   }
 });
 
 function fetchAvailableCities() {
@@ -41,6 +51,7 @@ function fetchWeatherByCity(city) {
 
 (function () {
     updateBlocksByCity('Vilnius');
+    modal.toggle();
 })();
 
 function updateBlocksByCity(city) {
@@ -87,6 +98,9 @@ function updateBlocks(city) {
     }).finally(() => {
         toggleWeatherWrapper();
         toggleSpinnerBlock();
+
+        cityInput.value = '';
+        cityInput.disabled = false;
     });
 }
 
