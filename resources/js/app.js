@@ -41,7 +41,7 @@ cityInput.addEventListener('keyup', event => {
 });
 
 window.addEventListener('keyup', event => {
-    if ((event.keyCode === 13) && (defaultModal.style.display === 'block')) {
+    if (event.keyCode === 13 && defaultModal.style.display === 'block') {
         event.preventDefault();
         modal.toggle();
     }
