@@ -13,6 +13,9 @@
 <body>
 <div class="container-fluid">
     <div class="row">
+        <div class="spinner-block d-flex justify-content-center align-items-center">
+            <p class="m-0 fs-1"><i class="fa-spin fas fa-spinner"></i></p>
+        </div>
         <div class="left-side col-12 col-lg-3 pt-4 pb-5">
             <div class="logo">
                 <a href="/"><img src="images/logo.png" alt="logo"></a>
@@ -26,7 +29,7 @@
             </div>
             <div class="cities">
                 <p class="fw-bold">Pasirinkite iš esamų miestų:</p>
-                <div class="cities-wrap d-flex flex-column align-items-center justify-content-center">
+                <div class="cities-wrap d-flex flex-sm-column align-items-center justify-content-center">
                     <ul class="d-flex flex-column flex-sm-row flex-lg-column align-items-start">
                         <li><a class="city-links" href="#">Vilnius</a></li>
                         <li><a class="city-links" href="#">Kaunas</a></li>
@@ -45,7 +48,7 @@
             </div>
         </div>
         <div class="right-side col-12 col-lg-9 pb-5">
-            <div class="weather-wrapper">
+            <div class="weather-wrapper d-none">
                 <p class="fs-3 text-center mb-2" id="city"><span class="fw-bold"><i class="fas fa-location-arrow"></i> Miestas</span></p>
                 <p class="fs-5 text-center mb-4" id="municipality">Miesto savivaldybė</p>
                 <div class="row">

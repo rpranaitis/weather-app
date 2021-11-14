@@ -13,6 +13,12 @@ let cityLinks = document.querySelectorAll('.city-links');
 let cityInput = document.querySelector('#cityInput');
 let searchButton = document.querySelector('#searchButton');
 
+let weatherWrapper = document.querySelector('.weather-wrapper');
+let spinnerBlock = document.querySelector('.spinner-block');
+
+let cityElement = document.querySelector('#city span');
+let municipalityElement = document.querySelector('#municipality')
+
 for (let cityLink of cityLinks) {
     cityLink.addEventListener('click', () => {
         updateBlocksByCity(cityLink.textContent);
@@ -33,7 +39,15 @@ function fetchWeatherByCity(city) {
         .then(response => response.json());
 }
 
+(function () {
+    updateBlocksByCity('Vilnius');
+})();
+
 function updateBlocksByCity(city) {
+    if (spinnerBlock.classList.contains('d-none')) {
+        toggleSpinnerBlock();
+    }
+
     city = city.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
     fetchAvailableCities().then(response => {
@@ -45,21 +59,34 @@ function updateBlocksByCity(city) {
     });
 }
 
+function toggleWeatherWrapper() {
+    if (weatherWrapper.classList.contains('d-none')) {
+        weatherWrapper.classList.toggle('d-block');
+        weatherWrapper.classList.toggle('d-none');
+        spinnerBlock.style.backgroundColor = 'rgba(255, 255, 255, .6)';
+    }
+}
+
+function toggleSpinnerBlock() {
+    spinnerBlock.classList.toggle('d-none');
+    spinnerBlock.classList.toggle('d-flex');
+}
+
 function updateBlocks(city) {
     fetchWeatherByCity(city).then(response => {
-        let filteredTimestamps = getFilteredTimestamps(response);
-
-        let cityElement = document.querySelector('#city span');
         cityElement.innerHTML = `<i class="fas fa-location-arrow"></i> ${response.place.name}`
-
-        let municipalityElement = document.querySelector('#municipality')
         municipalityElement.textContent = response.place.administrativeDivision;
+
+        let filteredTimestamps = getFilteredTimestamps(response);
 
         let temperature = new Temperature();
         temperature.updateTemperatureBlock(filteredTimestamps);
 
         let otherWeatherParameters = new OtherWeatherParameters();
         otherWeatherParameters.updateAllParameters(filteredTimestamps);
+    }).finally(() => {
+        toggleWeatherWrapper();
+        toggleSpinnerBlock();
     });
 }
 
