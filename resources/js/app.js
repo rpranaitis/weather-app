@@ -13,10 +13,6 @@ let cityLinks = document.querySelectorAll('.city-links');
 let cityInput = document.querySelector('#cityInput');
 let searchButton = document.querySelector('#searchButton');
 
-let weatherWrapper = document.querySelector('.weather-wrapper');
-let messageBox = document.querySelector('#messageBox');
-let message = document.querySelector('#messageBox p');
-
 for (let cityLink of cityLinks) {
     cityLink.addEventListener('click', () => {
         updateBlocksByCity(cityLink.textContent);
@@ -38,27 +34,15 @@ function fetchWeatherByCity(city) {
 }
 
 function updateBlocksByCity(city) {
-    weatherWrapper.classList.toggle('d-none');
-
-    messageBox.classList.toggle('d-none');
-    messageBox.classList.toggle('d-flex');
-
-    message.textContent = 'Kraunasi...'
-
-    city = city.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    city = city.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
     fetchAvailableCities().then(response => {
         for (let availableCity of response) {
-            if (city === availableCity) {
+            if (city === availableCity.code) {
                 return updateBlocks(city);
             }
         }
     });
-
-    messageBox.classList.toggle('d-none');
-    messageBox.classList.toggle('d-flex');
-    message.textContent = 'Tokio miesto duomenų bazėje nėra.'
-
 }
 
 function updateBlocks(city) {
@@ -77,11 +61,6 @@ function updateBlocks(city) {
         let otherWeatherParameters = new OtherWeatherParameters();
         otherWeatherParameters.updateAllParameters(filteredTimestamps);
     });
-
-    weatherWrapper.classList.toggle('d-none');
-
-    messageBox.classList.toggle('d-none');
-    messageBox.classList.toggle('d-flex');
 }
 
 function getFilteredTimestamps(data) {
