@@ -15,6 +15,22 @@ export default class Temperature {
         'na':               '<i class="wi wi-na"></i>'
     }
 
+    conditionTranslator = {
+        'clear':            'Giedra',
+        'isolated-clouds':  'Mažai debesuota',
+        'scattered-clouds': 'Debesuota su pragiedruliais',
+        'overcast':         'Debesuota',
+        'light-rain':       'Nedidelis lietus',
+        'moderate-rain':    'Lietus',
+        'heavy-rain':       'Smarkus lietus',
+        'sleet':            'Šlapdriba',
+        'light-snow':       'Nedidelis sniegas',
+        'moderate-snow':    'Sniegas',
+        'heavy-snow':       'Smarkus sniegas',
+        'fog':              'Rūkas',
+        'na':               'Rro sąlygos nenustatyto'
+    }
+
     updateTemperatureBlock(data) {
         this.updateTimes(data);
         this.updateIcons(data);
@@ -44,6 +60,7 @@ export default class Temperature {
             let temIcon = tempIcons[i];
             let condition = data[i].conditionCode;
 
+            temIcon.setAttribute('title', this.conditionTranslator[condition]);
             temIcon.innerHTML = this.conditionIcons[condition];
         }
     }
@@ -64,5 +81,9 @@ export default class Temperature {
 
     get conditionIcons() {
         return this.conditionIcons;
+    }
+
+    get conditionTranslator() {
+        return this.conditionTranslator;
     }
 }
