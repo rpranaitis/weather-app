@@ -20,6 +20,7 @@ let cityElement = document.querySelector('#city span');
 let municipalityElement = document.querySelector('#municipality')
 
 let modal = new bootstrap.Modal(document.querySelector('.modal'), {})
+let defaultModal = document.querySelector('.modal');
 
 for (let cityLink of cityLinks) {
     cityLink.addEventListener('click', () => {
@@ -37,6 +38,13 @@ cityInput.addEventListener('keyup', event => {
        cityInput.disabled = true;
        searchButton.click();
    }
+});
+
+window.addEventListener('keyup', event => {
+    if ((event.keyCode === 13) && (defaultModal.style.display === 'block')) {
+        event.preventDefault();
+        modal.toggle();
+    }
 });
 
 function fetchAvailableCities() {
