@@ -71,7 +71,7 @@ export default class Temperature {
         for (let i = 0; i < tempTemperatures.length; i++) {
             let tempTemperature = tempTemperatures[i];
 
-            tempTemperature.textContent = data[i].airTemperature + '°';
+            tempTemperature.textContent = data[i].airTemperature.toFixed() + '°';
         }
     }
 

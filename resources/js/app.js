@@ -29,6 +29,9 @@ let historyWrap = document.querySelector('.history-wrap');
 let historyList = document.querySelector('.history-wrap ul');
 let historyTitle = document.querySelector('.history p');
 
+let unitSwitch = document.querySelector('#unitSwitch');
+let temperatures = document.querySelectorAll('.temp-blocks .temperature p');
+
 const defaultCity = 'Vilnius';
 
 (function () {
@@ -48,6 +51,14 @@ function fetchWeatherByCity(city) {
 
 // Event listeners
 
+window.addEventListener('keyup', event => {
+    if (event.keyCode === 13 && defaultModal.style.display === 'block') {
+        event.preventDefault();
+        modal.toggle();
+        cityInput.focus();
+    }
+});
+
 for (let cityLink of cityLinks) {
     cityLink.addEventListener('click', () => {
         updateBlocksByCity(cityLink.textContent);
@@ -66,11 +77,11 @@ cityInput.addEventListener('keyup', event => {
     }
 });
 
-window.addEventListener('keyup', event => {
-    if (event.keyCode === 13 && defaultModal.style.display === 'block') {
-        event.preventDefault();
-        modal.toggle();
-        cityInput.focus();
+unitSwitch.addEventListener('click', () => {
+    if (unitSwitch.checked) {
+        convertTemperatureToF();
+    } else {
+        convertTemperatureToC();
     }
 });
 
@@ -115,6 +126,7 @@ function updateBlocks(city, history) {
 
         cityInput.value = '';
         cityInput.disabled = false;
+        unitSwitch.checked = false;
     });
 }
 
@@ -140,6 +152,24 @@ function updateHistory(city, history) {
     }
 
     historyList.appendChild(li);
+}
+
+function convertTemperatureToF() {
+    for (let temperature of temperatures) {
+        let value = temperature.textContent.replace('°', '');
+        let result = value * 1.8 + 32;
+
+        temperature.textContent = result.toFixed() + '°';
+    }
+}
+
+function convertTemperatureToC() {
+    for (let temperature of temperatures) {
+        let value = temperature.textContent.replace('°', '');
+        let result = (value - 32) / 1.8;
+
+        temperature.textContent = result.toFixed() + '°';
+    }
 }
 
 function isExistCityInHistory(city) {
