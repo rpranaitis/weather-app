@@ -52,7 +52,7 @@ window.addEventListener('keyup', event => {
 });
 
 function fetchAvailableCities() {
-    return fetch(`./weather/places`)
+    return fetch('./weather/places')
         .then(response => response.json());
 }
 
