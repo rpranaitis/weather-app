@@ -9,6 +9,8 @@ Date.prototype.addHours = function(h) {
     return this;
 }
 
+const defaultCity = 'Kaunas';
+
 let cityLinks = document.querySelectorAll('.city-links');
 let cityInput = document.querySelector('#cityInput');
 let searchButton = document.querySelector('#searchButton');
@@ -60,7 +62,7 @@ function fetchWeatherByCity(city) {
 }
 
 (function () {
-    updateBlocksByCity('Vilnius');
+    updateBlocksByCity(defaultCity);
 })();
 
 function updateBlocksByCity(city) {
