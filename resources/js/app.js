@@ -1,5 +1,5 @@
-import Temperature from "./Temperature";
-import OtherWeatherParameters from "./OtherWeatherParameters";
+import Temperature from "./updates/Temperature";
+import OtherWeatherParameters from "./updates/OtherWeatherParameters";
 
 window.bootstrap = require('bootstrap');
 
@@ -9,11 +9,15 @@ Date.prototype.addHours = function(h) {
     return this;
 }
 
-const defaultCity = 'Kaunas';
+// Selectors
 
 let cityLinks = document.querySelectorAll('.city-links');
 let cityInput = document.querySelector('#cityInput');
 let searchButton = document.querySelector('#searchButton');
+
+let modal = new bootstrap.Modal(document.querySelector('.modal'), {})
+let defaultModal = document.querySelector('.modal');
+let defaultModalText = document.querySelector('.modal .modal-body .body-text');
 
 let weatherWrapper = document.querySelector('.weather-wrapper');
 let spinnerBlock = document.querySelector('.spinner-block');
@@ -21,13 +25,28 @@ let spinnerBlock = document.querySelector('.spinner-block');
 let cityElement = document.querySelector('#city span');
 let municipalityElement = document.querySelector('#municipality')
 
-let modal = new bootstrap.Modal(document.querySelector('.modal'), {})
-let defaultModal = document.querySelector('.modal');
-let defaultModalText = document.querySelector('.modal .modal-body .body-text');
-
 let historyWrap = document.querySelector('.history-wrap');
+let historyList = document.querySelector('.history-wrap ul');
 let historyTitle = document.querySelector('.history p');
-let historyUl = document.querySelector('.history-wrap ul');
+
+const defaultCity = 'Vilnius';
+
+(function () {
+    updateBlocksByCity(defaultCity, false);
+})();
+
+
+function fetchAvailableCities() {
+    return fetch('./weather/places')
+        .then(response => response.json());
+}
+
+function fetchWeatherByCity(city) {
+    return fetch(`./weather/places/${city}`)
+        .then(response => response.json());
+}
+
+// Event listeners
 
 for (let cityLink of cityLinks) {
     cityLink.addEventListener('click', () => {
@@ -40,11 +59,11 @@ searchButton.addEventListener('click', () => {
 });
 
 cityInput.addEventListener('keyup', event => {
-   if (event.keyCode === 13) {
-       event.preventDefault();
-       cityInput.disabled = true;
-       searchButton.click();
-   }
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        cityInput.disabled = true;
+        searchButton.click();
+    }
 });
 
 window.addEventListener('keyup', event => {
@@ -55,9 +74,7 @@ window.addEventListener('keyup', event => {
     }
 });
 
-(function () {
-    updateBlocksByCity(defaultCity, false);
-})();
+// Updates
 
 function updateBlocksByCity(city, history = true) {
     if (spinnerBlock.classList.contains('d-none')) {
@@ -118,11 +135,11 @@ function updateHistory(city, history) {
         updateBlocksByCity(city);
     });
 
-    if (historyUl.childElementCount === 3) {
-        historyUl.removeChild(historyUl.children[0])
+    if (historyList.childElementCount === 3) {
+        historyList.removeChild(historyList.children[0])
     }
 
-    historyUl.appendChild(li);
+    historyList.appendChild(li);
 }
 
 function isExistCityInHistory(city) {
@@ -135,16 +152,6 @@ function isExistCityInHistory(city) {
     }
 
     return false;
-}
-
-function fetchAvailableCities() {
-    return fetch('./weather/places')
-        .then(response => response.json());
-}
-
-function fetchWeatherByCity(city) {
-    return fetch(`./weather/places/${city}`)
-        .then(response => response.json());
 }
 
 function throwError(text) {
