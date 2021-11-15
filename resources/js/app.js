@@ -21,6 +21,7 @@ let municipalityElement = document.querySelector('#municipality')
 
 let modal = new bootstrap.Modal(document.querySelector('.modal'), {})
 let defaultModal = document.querySelector('.modal');
+let defaultModalText = document.querySelector('.modal .modal-body .body-text');
 
 for (let cityLink of cityLinks) {
     cityLink.addEventListener('click', () => {
@@ -77,10 +78,17 @@ function updateBlocksByCity(city) {
         }
 
         toggleSpinnerBlock();
+        throwError('Tokio miesto duomenų bazėje nėra!');
+    });
+}
+
+function throwError(text) {
+    if (defaultModal.style.display === '' || defaultModal.style.display === 'none') {
+        defaultModalText.textContent = text;
         modal.toggle();
         cityInput.value = '';
         cityInput.disabled = false;
-    });
+    }
 }
 
 function toggleWeatherWrapper() {
