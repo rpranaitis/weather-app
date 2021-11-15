@@ -51,16 +51,6 @@ window.addEventListener('keyup', event => {
     }
 });
 
-function fetchAvailableCities() {
-    return fetch('./weather/places')
-        .then(response => response.json());
-}
-
-function fetchWeatherByCity(city) {
-    return fetch(`./weather/places/${city}`)
-        .then(response => response.json());
-}
-
 (function () {
     updateBlocksByCity(defaultCity);
 })();
@@ -84,6 +74,37 @@ function updateBlocksByCity(city) {
     });
 }
 
+function updateBlocks(city) {
+    fetchWeatherByCity(city).then(response => {
+        cityElement.innerHTML = `<i class="fas fa-location-arrow"></i> ${response.place.name}`
+        municipalityElement.textContent = response.place.administrativeDivision;
+
+        let filteredTimestamps = getFilteredTimestamps(response);
+
+        let temperature = new Temperature();
+        temperature.updateTemperatureBlock(filteredTimestamps);
+
+        let otherWeatherParameters = new OtherWeatherParameters();
+        otherWeatherParameters.updateAllParameters(filteredTimestamps);
+    }).finally(() => {
+        toggleWeatherWrapper();
+        toggleSpinnerBlock();
+
+        cityInput.value = '';
+        cityInput.disabled = false;
+    });
+}
+
+function fetchAvailableCities() {
+    return fetch('./weather/places')
+        .then(response => response.json());
+}
+
+function fetchWeatherByCity(city) {
+    return fetch(`./weather/places/${city}`)
+        .then(response => response.json());
+}
+
 function throwError(text) {
     if (defaultModal.style.display === '' || defaultModal.style.display === 'none') {
         defaultModalText.textContent = text;
@@ -104,27 +125,6 @@ function toggleWeatherWrapper() {
 function toggleSpinnerBlock() {
     spinnerBlock.classList.toggle('d-none');
     spinnerBlock.classList.toggle('d-flex');
-}
-
-function updateBlocks(city) {
-    fetchWeatherByCity(city).then(response => {
-        cityElement.innerHTML = `<i class="fas fa-location-arrow"></i> ${response.place.name}`
-        municipalityElement.textContent = response.place.administrativeDivision;
-
-        let filteredTimestamps = getFilteredTimestamps(response);
-
-        let temperature = new Temperature();
-        temperature.updateTemperatureBlock(filteredTimestamps);
-
-        let otherWeatherParameters = new OtherWeatherParameters();
-        otherWeatherParameters.updateAllParameters(filteredTimestamps);
-    }).finally(() => {
-        toggleWeatherWrapper();
-        toggleSpinnerBlock();
-
-        cityInput.value = '';
-        cityInput.disabled = false;
-    });
 }
 
 function getFilteredTimestamps(data) {
