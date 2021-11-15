@@ -23,7 +23,7 @@ export default class OtherWeatherParameters {
         });
 
         degrees.textContent = data[0].windDirection + '°';
-        icon.innerHTML = `<i class="wi wi-wind-direction"></i>`;
+        icon.innerHTML = `<i class="wi wi-wind towards-${closestDegree}-deg"></i>`;
     }
 
     updateCloudCover(data) {
