@@ -25,6 +25,10 @@ let modal = new bootstrap.Modal(document.querySelector('.modal'), {})
 let defaultModal = document.querySelector('.modal');
 let defaultModalText = document.querySelector('.modal .modal-body .body-text');
 
+let historyWrap = document.querySelector('.history-wrap');
+let historyTitle = document.querySelector('.history p');
+let historyUl = document.querySelector('.history-wrap ul');
+
 for (let cityLink of cityLinks) {
     cityLink.addEventListener('click', () => {
         updateBlocksByCity(cityLink.textContent);
@@ -52,10 +56,10 @@ window.addEventListener('keyup', event => {
 });
 
 (function () {
-    updateBlocksByCity(defaultCity);
+    updateBlocksByCity(defaultCity, false);
 })();
 
-function updateBlocksByCity(city) {
+function updateBlocksByCity(city, history = true) {
     if (spinnerBlock.classList.contains('d-none')) {
         toggleSpinnerBlock();
     }
@@ -65,7 +69,7 @@ function updateBlocksByCity(city) {
     fetchAvailableCities().then(response => {
         for (let availableCity of response) {
             if (city === availableCity.code) {
-                return updateBlocks(city);
+                return updateBlocks(city, history);
             }
         }
 
@@ -74,7 +78,7 @@ function updateBlocksByCity(city) {
     });
 }
 
-function updateBlocks(city) {
+function updateBlocks(city, history) {
     fetchWeatherByCity(city).then(response => {
         cityElement.innerHTML = `<i class="fas fa-location-arrow"></i> ${response.place.name}`
         municipalityElement.textContent = response.place.administrativeDivision;
@@ -86,6 +90,8 @@ function updateBlocks(city) {
 
         let otherWeatherParameters = new OtherWeatherParameters();
         otherWeatherParameters.updateAllParameters(filteredTimestamps);
+
+        updateHistory(response.place.name, history);
     }).finally(() => {
         toggleWeatherWrapper();
         toggleSpinnerBlock();
@@ -93,6 +99,42 @@ function updateBlocks(city) {
         cityInput.value = '';
         cityInput.disabled = false;
     });
+}
+
+function updateHistory(city, history) {
+    if (!history || isExistCityInHistory(city)) {
+        return;
+    }
+
+    if (historyWrap.classList.contains('d-none') && historyTitle.classList.contains('d-none')) {
+        historyWrap.classList.toggle('d-none');
+        historyTitle.classList.toggle('d-none');
+    }
+
+    let li = document.createElement('li');
+    li.classList.add('city-links', 'text-warning');
+    li.textContent = city;
+    li.addEventListener('click', () => {
+        updateBlocksByCity(city);
+    });
+
+    if (historyUl.childElementCount === 3) {
+        historyUl.removeChild(historyUl.children[0])
+    }
+
+    historyUl.appendChild(li);
+}
+
+function isExistCityInHistory(city) {
+    let elements = document.querySelectorAll('.history-wrap ul li');
+
+    for (let element of elements) {
+        if (element.textContent === city) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 function fetchAvailableCities() {

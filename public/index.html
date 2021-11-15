@@ -33,35 +33,48 @@
                 </div>
             </div>
         </div>
-        <div class="left-side col-12 col-lg-3 pt-4 pb-5">
-            <div class="logo">
-                <a href="/"><img src="images/logo.png" alt="logo"></a>
-            </div>
-            <div class="search">
-                <div class="input-group my-4">
-                    <span class="input-group-text"><i class="fas fa-search"></i></span>
-                    <input type="text" class="form-control" id="cityInput" placeholder="Miestas" aria-label="City">
-                    <button class="btn bg-warning text-dark" id="searchButton">Ieškoti</button>
+        <div class="left-side d-flex flex-column col-12 col-lg-3 pt-4 pb-5">
+            <div class="top">
+                <div class="logo">
+                    <a href="/"><img src="images/logo.png" alt="logo"></a>
+                </div>
+                <div class="search">
+                    <div class="input-group my-4">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control" id="cityInput" placeholder="Miestas" aria-label="City">
+                        <button class="btn bg-warning text-dark" id="searchButton">Ieškoti</button>
+                    </div>
+                </div>
+                <div class="history">
+                    <p class="fw-bold text-center mb-2 d-none">Paskutiniai ieškoti miestai:</p>
+                    <div class="history-wrap d-flex align-items-center justify-content-center d-none">
+                        <ul class="d-flex justify-content-center">
+                        </ul>
+                    </div>
+                </div>
+                <div class="cities">
+                    <p class="fw-bold mt-3 mb-2">Pasirinkite iš esamų miestų:</p>
+                    <div class="cities-wrap d-flex flex-sm-column align-items-center justify-content-center">
+                        <ul class="d-flex flex-column flex-sm-row flex-lg-column align-items-start">
+                            <li class="city-links">Vilnius</li>
+                            <li class="city-links">Kaunas</li>
+                            <li class="city-links">Klaipėda</li>
+                            <li class="city-links">Šiauliai</li>
+                            <li class="city-links">Panevėžys</li>
+                        </ul>
+                        <ul class="d-flex flex-column flex-sm-row flex-lg-column align-items-start">
+                            <li class="city-links">Marijampolė</li>
+                            <li class="city-links">Alytus</li>
+                            <li class="city-links">Telšiai</li>
+                            <li class="city-links">Utena</li>
+                            <li class="city-links">Tauragė</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div class="cities">
-                <p class="fw-bold">Pasirinkite iš esamų miestų:</p>
-                <div class="cities-wrap d-flex flex-sm-column align-items-center justify-content-center">
-                    <ul class="d-flex flex-column flex-sm-row flex-lg-column align-items-start">
-                        <li class="city-links">Vilnius</li>
-                        <li class="city-links">Kaunas</li>
-                        <li class="city-links">Klaipėda</li>
-                        <li class="city-links">Šiauliai</li>
-                        <li class="city-links">Panevėžys</li>
-                    </ul>
-                    <ul class="d-flex flex-column flex-sm-row flex-lg-column align-items-start">
-                        <li class="city-links">Marijampolė</li>
-                        <li class="city-links">Alytus</li>
-                        <li class="city-links">Telšiai</li>
-                        <li class="city-links">Utena</li>
-                        <li class="city-links">Tauragė</li>
-                    </ul>
-                </div>
+            <div class="bottom d-flex flex-column justify-content-end align-items-center">
+                <hr>
+                <p>Šaltinis: <a href="https://www.meteo.lt" target="_blank">www.meteo.lt</a></p>
             </div>
         </div>
         <div class="right-side col-12 col-lg-9 pb-5">

@@ -84,20 +84,20 @@ body {
 
 .cities {
     text-align: center;
+}
 
-    ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
 
-    ul li {
-        margin: 0 5px;
-    }
+ul li {
+    margin: 0 5px;
+}
 
-    ul li a {
-        color: white;
-    }
+ul li a {
+    color: white;
 }
 
 .block {
@@ -168,11 +168,32 @@ body {
     color: white;
 }
 
+.bottom {
+    height: 100%;
+}
+
+.bottom p {
+    color: white;
+    font-size: 14px;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+.bottom a {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+hr {
+    background-color: white;
+    width: 80%;
+    margin-top: 30px;
+}
+
 @media only screen and (min-width: 992px) {
-    .cities {
-        ul {
-            width: 88.77px;
-        }
+    .cities ul {
+        width: 88.77px;
     }
 }
 
@@ -195,9 +216,7 @@ body {
         width: 55%;
     }
 
-    .cities {
-        ul {
-            width: 88.77px;
-        }
+    .cities ul {
+        width: 88.77px;
     }
 }
