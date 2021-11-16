@@ -10,6 +10,11 @@ export default class OtherWeatherParameters {
 
     updateWindSpeed(data) {
         let element = document.querySelector('.wind-speed .body p');
+        element.classList.remove('text-danger');
+
+        if (data[0].windSpeed > 10) {
+            element.classList.add('text-danger');
+        }
 
         element.textContent = data[0].windSpeed + ' m/s';
     }
