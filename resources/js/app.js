@@ -80,10 +80,7 @@ function updateBlocks(city, history) {
         updateHistory(response.place.name, history);
     }).finally(() => {
         toggleWeatherWrapper();
-
-        if (spinnerBlock.classList.contains('d-flex')) {
-            toggleSpinnerBlock();
-        }
+        toggleSpinnerBlock();
 
         cityInput.value = '';
         cityInput.disabled = false;
