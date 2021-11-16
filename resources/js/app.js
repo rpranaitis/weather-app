@@ -32,6 +32,8 @@ let historyTitle = document.querySelector('.history p');
 let unitSwitch = document.querySelector('#unitSwitch');
 let temperatures = document.querySelectorAll('.temp-blocks .temperature p');
 
+let body = document.querySelector('body');
+
 const defaultCity = 'Vilnius';
 
 (function () {
@@ -89,6 +91,8 @@ unitSwitch.addEventListener('click', () => {
 
 function updateBlocksByCity(city, history = true) {
     if (spinnerBlock.classList.contains('d-none')) {
+        body.style.backgroundColor = 'rgba(45, 56, 70, .4)';
+        document.documentElement.scrollTop = 0;
         toggleSpinnerBlock();
     }
 
@@ -127,6 +131,7 @@ function updateBlocks(city, history) {
         cityInput.value = '';
         cityInput.disabled = false;
         unitSwitch.checked = false;
+        body.style.backgroundColor = 'rgba(45, 56, 70, 1)';
     });
 }
 
