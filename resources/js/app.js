@@ -1,3 +1,4 @@
+import "./events"
 import Temperature from "./updates/Temperature";
 import OtherWeatherParameters from "./updates/OtherWeatherParameters";
 import {
