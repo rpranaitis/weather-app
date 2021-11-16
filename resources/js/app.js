@@ -12,9 +12,12 @@ Date.prototype.addHours = function(h) {
     return this;
 }
 
-const defaultCity = 'Kaunas';
+// Default city weather loading
 
+const defaultCity = 'Kaunas';
 updateBlocksByCity(defaultCity, false);
+
+// Main logic
 
 function fetchAvailableCities() {
     return fetch('./weather/places')
