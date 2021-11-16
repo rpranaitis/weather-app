@@ -1,7 +1,9 @@
 import Temperature from "./updates/Temperature";
 import OtherWeatherParameters from "./updates/OtherWeatherParameters";
-
-window.bootstrap = require('bootstrap');
+import {
+    body, cityElement, cityInput, defaultModal, defaultModalText, historyList, historyTitle,
+    historyWrap, modal, municipalityElement, spinnerBlock, temperatures, unitSwitch, weatherWrapper
+} from "./selectors";
 
 Date.prototype.addHours = function(h) {
     this.setHours(this.getHours() + h);
@@ -9,37 +11,9 @@ Date.prototype.addHours = function(h) {
     return this;
 }
 
-// Selectors
+const defaultCity = 'Kaunas';
 
-let cityLinks = document.querySelectorAll('.city-links');
-let cityInput = document.querySelector('#cityInput');
-let searchButton = document.querySelector('#searchButton');
-
-let modal = new bootstrap.Modal(document.querySelector('.modal'), {})
-let defaultModal = document.querySelector('.modal');
-let defaultModalText = document.querySelector('.modal .modal-body .body-text');
-
-let weatherWrapper = document.querySelector('.weather-wrapper');
-let spinnerBlock = document.querySelector('.spinner-block');
-
-let cityElement = document.querySelector('#city span');
-let municipalityElement = document.querySelector('#municipality')
-
-let historyWrap = document.querySelector('.history-wrap');
-let historyList = document.querySelector('.history-wrap ul');
-let historyTitle = document.querySelector('.history p');
-
-let unitSwitch = document.querySelector('#unitSwitch');
-let temperatures = document.querySelectorAll('.temp-blocks .temperature p');
-
-let body = document.querySelector('body');
-
-const defaultCity = 'Vilnius';
-
-(function () {
-    updateBlocksByCity(defaultCity, false);
-})();
-
+updateBlocksByCity(defaultCity, false);
 
 function fetchAvailableCities() {
     return fetch('./weather/places')
@@ -51,45 +25,7 @@ function fetchWeatherByCity(city) {
         .then(response => response.json());
 }
 
-// Event listeners
-
-window.addEventListener('keyup', event => {
-    if (event.keyCode === 13 && defaultModal.style.display === 'block') {
-        event.preventDefault();
-        modal.toggle();
-        cityInput.focus();
-    }
-});
-
-for (let cityLink of cityLinks) {
-    cityLink.addEventListener('click', () => {
-        updateBlocksByCity(cityLink.textContent);
-    });
-}
-
-searchButton.addEventListener('click', () => {
-    updateBlocksByCity(cityInput.value);
-});
-
-cityInput.addEventListener('keyup', event => {
-    if (event.keyCode === 13) {
-        event.preventDefault();
-        cityInput.disabled = true;
-        searchButton.click();
-    }
-});
-
-unitSwitch.addEventListener('click', () => {
-    if (unitSwitch.checked) {
-        convertTemperatureToF();
-    } else {
-        convertTemperatureToC();
-    }
-});
-
-// Updates
-
-function updateBlocksByCity(city, history = true) {
+export function updateBlocksByCity(city, history = true) {
     if (spinnerBlock.classList.contains('d-none')) {
         body.style.backgroundColor = 'rgba(45, 56, 70, .4)';
         document.documentElement.scrollTop = 0;
@@ -110,6 +46,24 @@ function updateBlocksByCity(city, history = true) {
     });
 }
 
+export function convertTemperatureToF() {
+    for (let temperature of temperatures) {
+        let value = temperature.textContent.replace('°', '');
+        let result = value * 1.8 + 32;
+
+        temperature.textContent = result.toFixed() + '°';
+    }
+}
+
+export function convertTemperatureToC() {
+    for (let temperature of temperatures) {
+        let value = temperature.textContent.replace('°', '');
+        let result = (value - 32) / 1.8;
+
+        temperature.textContent = result.toFixed() + '°';
+    }
+}
+
 function updateBlocks(city, history) {
     fetchWeatherByCity(city).then(response => {
         cityElement.innerHTML = `<i class="fas fa-location-arrow"></i> ${response.place.name}`
@@ -126,7 +80,10 @@ function updateBlocks(city, history) {
         updateHistory(response.place.name, history);
     }).finally(() => {
         toggleWeatherWrapper();
-        toggleSpinnerBlock();
+
+        if (spinnerBlock.classList.contains('d-flex')) {
+            toggleSpinnerBlock();
+        }
 
         cityInput.value = '';
         cityInput.disabled = false;
@@ -157,24 +114,6 @@ function updateHistory(city, history) {
     }
 
     historyList.appendChild(li);
-}
-
-function convertTemperatureToF() {
-    for (let temperature of temperatures) {
-        let value = temperature.textContent.replace('°', '');
-        let result = value * 1.8 + 32;
-
-        temperature.textContent = result.toFixed() + '°';
-    }
-}
-
-function convertTemperatureToC() {
-    for (let temperature of temperatures) {
-        let value = temperature.textContent.replace('°', '');
-        let result = (value - 32) / 1.8;
-
-        temperature.textContent = result.toFixed() + '°';
-    }
 }
 
 function isExistCityInHistory(city) {
