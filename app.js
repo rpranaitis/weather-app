@@ -15,6 +15,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/weather', weatherRouter);
+app.use('/weather/places', weatherRouter);
 
 module.exports = app;
