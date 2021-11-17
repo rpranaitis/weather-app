@@ -9,6 +9,10 @@ window.addEventListener('keyup', event => {
     }
 });
 
+defaultModal.addEventListener('hidden.bs.modal', () => {
+    cityInput.focus();
+});
+
 for (let cityLink of cityLinks) {
     cityLink.addEventListener('click', () => {
         updateBlocksByCity(cityLink.textContent);
