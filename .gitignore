@@ -11,3 +11,5 @@ node_modules
 
 /public/mix-manifest.json
 /public/mix.js.map
+
+/cache/available-cities.json
