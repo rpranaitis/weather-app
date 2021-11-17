@@ -1,2 +1,2 @@
-require('./weather/index');
-require('./weather/place');
+require('./places/index');
+require('./places/place');
