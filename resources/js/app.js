@@ -46,6 +46,7 @@ export function updateBlocksByCity(city, history = true) {
         }
 
         toggleSpinnerBlock();
+        body.style.backgroundColor = 'rgba(45, 56, 70, 1)';
         throwError('Tokio miesto duomenų bazėje nėra!');
     });
 }
