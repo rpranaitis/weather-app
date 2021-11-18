@@ -1,9 +1,10 @@
 import "./events"
 import Temperature from "./updates/Temperature";
 import OtherWeatherParameters from "./updates/OtherWeatherParameters";
+
 import {
-    body, cityElement, cityInput, defaultModal, defaultModalText, historyList, historyTitle, historyWrap, modal,
-    municipalityElement, suggestions, spinnerBlock, temperatures, unitSwitch, weatherWrapper, inputGroupText
+    body, cityElement, cityInput, defaultModal, defaultModalText, modal, municipalityElement, suggestions, spinnerBlock,
+    temperatures, unitSwitch, weatherWrapper, inputGroupText, historySuggestions
 } from "./selectors";
 
 Date.prototype.addHours = function (h) {
@@ -23,7 +24,7 @@ function fetchWeatherByCity(city) {
         .then(response => response.json());
 }
 
-export function fetchAvailableCities(city) {
+function fetchAvailableCities(city) {
     return fetch(`./weather/places/${city}`)
         .then(response => response.json());
 }
@@ -46,30 +47,85 @@ export function convertTemperatureToC() {
     }
 }
 
-export function createCitySuggestions(cities) {
-    let ul = document.createElement('ul');
+export function showCitySuggestions(city) {
+    fetchAvailableCities(city).then(response => {
+        if (response.length) {
+            suggestions.innerHTML = '';
+            createCitySuggestions(response);
+            hideHistory();
+            showSuggestions();
+        } else {
+            hideSuggestions();
+            hideHistory();
+        }
+    });
+}
 
+export function createCitySuggestions(cities) {
     for (let city of cities) {
-        let li = document.createElement('li');
-        ul.appendChild(li);
+        let suggestionBox = document.createElement('div');
+        suggestionBox.classList.add('suggestion-box', 'd-flex');
+        suggestions.appendChild(suggestionBox);
+
+        let body = document.createElement('div');
+        body.classList.add('body')
+        suggestionBox.appendChild(body);
 
         let cityParagraph = document.createElement('p');
         cityParagraph.classList.add('city');
         cityParagraph.textContent = city.name;
-        li.appendChild(cityParagraph);
+        body.appendChild(cityParagraph);
 
         let municipalityParagraph = document.createElement('p');
         municipalityParagraph.classList.add('municipality');
         municipalityParagraph.textContent = city.administrativeDivision;
-        li.appendChild(municipalityParagraph);
+        body.appendChild(municipalityParagraph);
 
-        li.addEventListener('click', () => {
+        suggestionBox.addEventListener('click', () => {
             hideSuggestions();
+            hideHistory();
             updateBlocksByCity(city.code);
         });
     }
+}
 
-    suggestions.appendChild(ul);
+function updateHistory(city, municipality, code, history) {
+    if (!history) {
+        return;
+    }
+
+    if (historySuggestions.childElementCount === 10) {
+        historySuggestions.removeChild(historySuggestions.children[9])
+    }
+
+    let suggestionBox = document.createElement('div');
+    suggestionBox.classList.add('suggestion-box', 'd-flex');
+    historySuggestions.prepend(suggestionBox);
+
+    let icon = document.createElement('div');
+    icon.classList.add('icon', 'd-flex', 'align-items-center')
+    icon.innerHTML = '<i class="fas fa-history"></i>';
+    suggestionBox.appendChild(icon);
+
+    let body = document.createElement('div');
+    body.classList.add('body')
+    suggestionBox.appendChild(body);
+
+    let cityParagraph = document.createElement('p');
+    cityParagraph.classList.add('city');
+    cityParagraph.textContent = city;
+    body.appendChild(cityParagraph);
+
+    let municipalityParagraph = document.createElement('p');
+    municipalityParagraph.classList.add('municipality');
+    municipalityParagraph.textContent = municipality;
+    body.appendChild(municipalityParagraph);
+
+    suggestionBox.addEventListener('click', () => {
+        hideSuggestions();
+        hideHistory();
+        updateBlocksByCity(code);
+    });
 }
 
 export function showSuggestions() {
@@ -80,6 +136,16 @@ export function showSuggestions() {
 export function hideSuggestions() {
     inputGroupText.style.borderBottomLeftRadius = '24px';
     suggestions.classList.add('d-none');
+}
+
+export function showHistory() {
+    inputGroupText.style.borderBottomLeftRadius = 0;
+    historySuggestions.classList.remove('d-none');
+}
+
+export function hideHistory() {
+    inputGroupText.style.borderBottomLeftRadius = '24px';
+    historySuggestions.classList.add('d-none');
 }
 
 export function updateBlocksByCity(city, history = true) {
@@ -99,14 +165,13 @@ export function updateBlocksByCity(city, history = true) {
 
     fetchWeatherByCity(city).then(response => {
         updateBlocks(response);
-        updateHistory(response.place.name, history);
+        updateHistory(response.place.name, response.place.administrativeDivision, response.place.code, history);
     }).catch(() => {
         throwError('Tokio miesto duomenų bazėje nėra!');
     }).finally(() => {
         toggleWeatherWrapper();
         toggleSpinnerBlock();
 
-        cityInput.value = '';
         cityInput.disabled = false;
         unitSwitch.checked = false;
         body.style.backgroundColor = 'rgba(45, 56, 70, 1)';
@@ -126,47 +191,10 @@ function updateBlocks(data) {
     otherWeatherParameters.updateAllParameters(filteredTimestamps);
 }
 
-function updateHistory(city, history) {
-    if (!history || isExistCityInHistory(city)) {
-        return;
-    }
-
-    if (historyWrap.classList.contains('d-none') && historyTitle.classList.contains('d-none')) {
-        historyWrap.classList.toggle('d-none');
-        historyTitle.classList.toggle('d-none');
-    }
-
-    let li = document.createElement('li');
-    li.classList.add('city-links', 'text-warning');
-    li.textContent = city;
-    li.addEventListener('click', () => {
-        updateBlocksByCity(city);
-    });
-
-    if (historyList.childElementCount === 3) {
-        historyList.removeChild(historyList.children[0])
-    }
-
-    historyList.appendChild(li);
-}
-
-function isExistCityInHistory(city) {
-    let elements = document.querySelectorAll('.history-wrap ul li');
-
-    for (let element of elements) {
-        if (element.textContent === city) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 function throwError(text) {
     if (defaultModal.style.display === '' || defaultModal.style.display === 'none') {
         defaultModalText.textContent = text;
         modal.toggle();
-        cityInput.value = '';
         cityInput.disabled = false;
     }
 }

@@ -5,18 +5,29 @@ import {
     cityLinks,
     searchButton,
     unitSwitch,
-    suggestions
+    historySuggestions, suggestions
 } from './selectors';
 
 import {
     updateBlocksByCity,
     convertTemperatureToF,
     convertTemperatureToC,
-    fetchAvailableCities,
-    createCitySuggestions, showSuggestions, hideSuggestions
+    showSuggestions,
+    hideSuggestions,
+    showHistory,
+    hideHistory,
+    showCitySuggestions
 } from './app';
 
 import debounce from 'lodash.debounce';
+
+window.addEventListener('click', event => {
+    if (!suggestions.classList.contains('d-none') || !historySuggestions.classList.contains('d-none')) {
+        event.preventDefault();
+        hideHistory();
+        hideSuggestions();
+    }
+});
 
 window.addEventListener('keyup', event => {
     if (event.keyCode === 13 && defaultModal.style.display === 'block') {
@@ -38,7 +49,20 @@ for (let cityLink of cityLinks) {
 
 searchButton.addEventListener('click', () => {
     hideSuggestions();
+    hideHistory();
     updateBlocksByCity(cityInput.value);
+});
+
+cityInput.addEventListener('click', () => {
+    if (cityInput.value) {
+        hideHistory();
+        showSuggestions(cityInput.value);
+    }
+
+    if (historySuggestions.childElementCount && !cityInput.value) {
+        hideSuggestions()
+        showHistory();
+    }
 });
 
 cityInput.addEventListener('keyup', event => {
@@ -59,16 +83,9 @@ unitSwitch.addEventListener('click', () => {
 
 cityInput.addEventListener('input', debounce(function() {
     if (cityInput.value) {
-        fetchAvailableCities(cityInput.value).then(response => {
-            if (response.length) {
-                suggestions.innerHTML = '';
-                createCitySuggestions(response);
-                showSuggestions();
-            } else {
-                hideSuggestions();
-            }
-        });
+        showCitySuggestions(cityInput.value);
     } else {
         hideSuggestions();
+        showHistory();
     }
 }, 500));
