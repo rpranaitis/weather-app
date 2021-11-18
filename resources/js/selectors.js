@@ -3,6 +3,9 @@ window.bootstrap = require('bootstrap');
 export let cityLinks = document.querySelectorAll('.city-links');
 export let cityInput = document.querySelector('#cityInput');
 export let searchButton = document.querySelector('#searchButton');
+export let inputGroupText = document.querySelector('.input-group-text');
+
+export let searchList = document.querySelector('.search-list');
 
 export let modal = new bootstrap.Modal(document.querySelector('.modal'), {})
 export let defaultModal = document.querySelector('.modal');

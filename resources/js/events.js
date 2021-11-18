@@ -1,5 +1,15 @@
-import {defaultModal, modal, cityInput, cityLinks, searchButton, unitSwitch} from './selectors';
+import {
+    defaultModal,
+    modal,
+    cityInput,
+    cityLinks,
+    searchButton,
+    unitSwitch,
+    searchList,
+    inputGroupText
+} from './selectors';
 import {updateBlocksByCity, convertTemperatureToF, convertTemperatureToC} from './app';
+import debounce from 'lodash.debounce';
 
 window.addEventListener('keyup', event => {
     if (event.keyCode === 13 && defaultModal.style.display === 'block') {
@@ -30,6 +40,13 @@ cityInput.addEventListener('keyup', event => {
         searchButton.click();
     }
 });
+
+cityInput.addEventListener('input', debounce(function() {
+    if (searchList.classList.contains('d-none')) {
+        inputGroupText.style.borderBottomLeftRadius = 0;
+        searchList.classList.remove('d-none');
+    }
+}, 500));
 
 unitSwitch.addEventListener('click', () => {
     if (unitSwitch.checked) {

@@ -12,18 +12,18 @@ Date.prototype.addHours = function(h) {
     return this;
 }
 
-
+// Page start
 const defaultCity = 'Kaunas';
 updateBlocksByCity(defaultCity, false);
+//
 
-
-function fetchAvailableCities() {
-    return fetch('./weather/places')
+function fetchAvailableCities(city) {
+    return fetch(`./weather/places/${city}`)
         .then(response => response.json());
 }
 
 function fetchWeatherByCity(city) {
-    return fetch(`./weather/places/${city}`)
+    return fetch(`./weather/${city}`)
         .then(response => response.json());
 }
 
@@ -34,9 +34,15 @@ export function updateBlocksByCity(city, history = true) {
         toggleSpinnerBlock();
     }
 
+    if (!city) {
+        toggleSpinnerBlock();
+        body.style.backgroundColor = 'rgba(45, 56, 70, 1)';
+        throwError('Neįvestas miestas!');
+    }
+
     city = city.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-    fetchAvailableCities().then(response => {
+    fetchAvailableCities(city).then(response => {
         for (let availableCity of response) {
             if (city === availableCity.code) {
                 return updateBlocks(city, history);

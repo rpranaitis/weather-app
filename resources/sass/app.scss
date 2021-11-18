@@ -73,6 +73,45 @@ body {
     color: #a8b6cb;
 }
 
+.top {
+    position: relative;
+}
+
+.search-list {
+    margin: 0;
+    border-top: 1px solid #dadada;
+    position: absolute;
+    width: 100%;
+}
+
+.search-list ul li {
+    background-color: white;
+    margin: 0;
+    width: 100%;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.search-list ul li:hover {
+    background-color: #e5e5e5;
+}
+
+.search-list p {
+    margin: 0;
+}
+
+.search-list p.city {
+    font-size: 16px;
+    color: #354256;
+    font-weight: bold;
+}
+
+.search-list p.municipality {
+    font-size: 13px;
+    color: #858585;
+    font-style: italic;
+}
+
 .btn {
     border-radius: 0;
     font-size: 16px;
