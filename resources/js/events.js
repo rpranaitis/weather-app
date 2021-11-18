@@ -5,10 +5,17 @@ import {
     cityLinks,
     searchButton,
     unitSwitch,
-    searchList,
-    inputGroupText
+    suggestions
 } from './selectors';
-import {updateBlocksByCity, convertTemperatureToF, convertTemperatureToC} from './app';
+
+import {
+    updateBlocksByCity,
+    convertTemperatureToF,
+    convertTemperatureToC,
+    fetchAvailableCities,
+    createCitySuggestions, showSuggestions, hideSuggestions
+} from './app';
+
 import debounce from 'lodash.debounce';
 
 window.addEventListener('keyup', event => {
@@ -30,6 +37,7 @@ for (let cityLink of cityLinks) {
 }
 
 searchButton.addEventListener('click', () => {
+    hideSuggestions();
     updateBlocksByCity(cityInput.value);
 });
 
@@ -41,13 +49,6 @@ cityInput.addEventListener('keyup', event => {
     }
 });
 
-cityInput.addEventListener('input', debounce(function() {
-    if (searchList.classList.contains('d-none')) {
-        inputGroupText.style.borderBottomLeftRadius = 0;
-        searchList.classList.remove('d-none');
-    }
-}, 500));
-
 unitSwitch.addEventListener('click', () => {
     if (unitSwitch.checked) {
         convertTemperatureToF();
@@ -55,3 +56,19 @@ unitSwitch.addEventListener('click', () => {
         convertTemperatureToC();
     }
 });
+
+cityInput.addEventListener('input', debounce(function() {
+    if (cityInput.value) {
+        fetchAvailableCities(cityInput.value).then(response => {
+            if (response.length) {
+                suggestions.innerHTML = '';
+                createCitySuggestions(response);
+                showSuggestions();
+            } else {
+                hideSuggestions();
+            }
+        });
+    } else {
+        hideSuggestions();
+    }
+}, 500));

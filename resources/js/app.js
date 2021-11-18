@@ -2,11 +2,11 @@ import "./events"
 import Temperature from "./updates/Temperature";
 import OtherWeatherParameters from "./updates/OtherWeatherParameters";
 import {
-    body, cityElement, cityInput, defaultModal, defaultModalText, historyList, historyTitle,
-    historyWrap, modal, municipalityElement, spinnerBlock, temperatures, unitSwitch, weatherWrapper
+    body, cityElement, cityInput, defaultModal, defaultModalText, historyList, historyTitle, historyWrap, modal,
+    municipalityElement, suggestions, spinnerBlock, temperatures, unitSwitch, weatherWrapper, inputGroupText
 } from "./selectors";
 
-Date.prototype.addHours = function(h) {
+Date.prototype.addHours = function (h) {
     this.setHours(this.getHours() + h);
 
     return this;
@@ -15,44 +15,17 @@ Date.prototype.addHours = function(h) {
 // Page start
 const defaultCity = 'Kaunas';
 updateBlocksByCity(defaultCity, false);
-//
 
-function fetchAvailableCities(city) {
-    return fetch(`./weather/places/${city}`)
-        .then(response => response.json());
-}
+//
 
 function fetchWeatherByCity(city) {
     return fetch(`./weather/${city}`)
         .then(response => response.json());
 }
 
-export function updateBlocksByCity(city, history = true) {
-    if (spinnerBlock.classList.contains('d-none')) {
-        body.style.backgroundColor = 'rgba(45, 56, 70, .4)';
-        document.documentElement.scrollTop = 0;
-        toggleSpinnerBlock();
-    }
-
-    if (!city) {
-        toggleSpinnerBlock();
-        body.style.backgroundColor = 'rgba(45, 56, 70, 1)';
-        throwError('Neįvestas miestas!');
-    }
-
-    city = city.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
-    fetchAvailableCities(city).then(response => {
-        for (let availableCity of response) {
-            if (city === availableCity.code) {
-                return updateBlocks(city, history);
-            }
-        }
-
-        toggleSpinnerBlock();
-        body.style.backgroundColor = 'rgba(45, 56, 70, 1)';
-        throwError('Tokio miesto duomenų bazėje nėra!');
-    });
+export function fetchAvailableCities(city) {
+    return fetch(`./weather/places/${city}`)
+        .then(response => response.json());
 }
 
 export function convertTemperatureToF() {
@@ -73,20 +46,62 @@ export function convertTemperatureToC() {
     }
 }
 
-function updateBlocks(city, history) {
+export function createCitySuggestions(cities) {
+    let ul = document.createElement('ul');
+
+    for (let city of cities) {
+        let li = document.createElement('li');
+        ul.appendChild(li);
+
+        let cityParagraph = document.createElement('p');
+        cityParagraph.classList.add('city');
+        cityParagraph.textContent = city.name;
+        li.appendChild(cityParagraph);
+
+        let municipalityParagraph = document.createElement('p');
+        municipalityParagraph.classList.add('municipality');
+        municipalityParagraph.textContent = city.administrativeDivision;
+        li.appendChild(municipalityParagraph);
+
+        li.addEventListener('click', () => {
+            hideSuggestions();
+            updateBlocksByCity(city.code);
+        });
+    }
+
+    suggestions.appendChild(ul);
+}
+
+export function showSuggestions() {
+    inputGroupText.style.borderBottomLeftRadius = 0;
+    suggestions.classList.remove('d-none');
+}
+
+export function hideSuggestions() {
+    inputGroupText.style.borderBottomLeftRadius = '24px';
+    suggestions.classList.add('d-none');
+}
+
+export function updateBlocksByCity(city, history = true) {
+    if (spinnerBlock.classList.contains('d-none')) {
+        body.style.backgroundColor = 'rgba(45, 56, 70, .4)';
+        document.documentElement.scrollTop = 0;
+        toggleSpinnerBlock();
+    }
+
+    if (!city) {
+        toggleSpinnerBlock();
+        body.style.backgroundColor = 'rgba(45, 56, 70, 1)';
+        throwError('Neįvestas miestas!');
+    }
+
+    city = city.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
     fetchWeatherByCity(city).then(response => {
-        cityElement.innerHTML = `<i class="fas fa-location-arrow"></i> ${response.place.name}`
-        municipalityElement.textContent = response.place.administrativeDivision;
-
-        let filteredTimestamps = getFilteredTimestamps(response);
-
-        let temperature = new Temperature();
-        temperature.updateTemperatureBlock(filteredTimestamps);
-
-        let otherWeatherParameters = new OtherWeatherParameters();
-        otherWeatherParameters.updateAllParameters(filteredTimestamps);
-
+        updateBlocks(response);
         updateHistory(response.place.name, history);
+    }).catch(() => {
+        throwError('Tokio miesto duomenų bazėje nėra!');
     }).finally(() => {
         toggleWeatherWrapper();
         toggleSpinnerBlock();
@@ -96,6 +111,19 @@ function updateBlocks(city, history) {
         unitSwitch.checked = false;
         body.style.backgroundColor = 'rgba(45, 56, 70, 1)';
     });
+}
+
+function updateBlocks(data) {
+    cityElement.innerHTML = `<i class="fas fa-location-arrow"></i> ${data.place.name}`
+    municipalityElement.textContent = data.place.administrativeDivision;
+
+    let filteredTimestamps = getFilteredTimestamps(data);
+
+    let temperature = new Temperature();
+    temperature.updateTemperatureBlock(filteredTimestamps);
+
+    let otherWeatherParameters = new OtherWeatherParameters();
+    otherWeatherParameters.updateAllParameters(filteredTimestamps);
 }
 
 function updateHistory(city, history) {

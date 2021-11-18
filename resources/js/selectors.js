@@ -5,7 +5,7 @@ export let cityInput = document.querySelector('#cityInput');
 export let searchButton = document.querySelector('#searchButton');
 export let inputGroupText = document.querySelector('.input-group-text');
 
-export let searchList = document.querySelector('.search-list');
+export let suggestions = document.querySelector('.suggestions');
 
 export let modal = new bootstrap.Modal(document.querySelector('.modal'), {})
 export let defaultModal = document.querySelector('.modal');
