@@ -9,7 +9,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/default', function(req, res, next) {
-  https.get(`https://ipinfo.io/${requestIp.getClientIp(req)}`, response => {
+  let ip = extractIp(requestIp.getClientIp(req));
+
+  https.get(`https://ipinfo.io/${ip}`, response => {
     let result = '';
 
     response.on('data', data => {
@@ -21,5 +23,13 @@ router.get('/default', function(req, res, next) {
     });
   });
 });
+
+function extractIp(ip) {
+  if (ip.substr(0, 7) === '::ffff:') {
+    return ip.substr(7);
+  }
+
+  return ip;
+}
 
 module.exports = router;

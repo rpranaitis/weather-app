@@ -264,6 +264,10 @@ hr {
     .left-side {
         height: 100%;
     }
+
+    .temperature p {
+        font-weight: bold;
+    }
 }
 
 @media only screen and (max-width: 576px) {
