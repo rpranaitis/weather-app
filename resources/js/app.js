@@ -216,6 +216,8 @@ export function extractCodeFromSuggestions(city) {
             return suggestionBox.getAttribute('data-code');
         }
     }
+
+    return city;
 }
 
 function updateBlocks(data) {
