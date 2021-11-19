@@ -11,10 +11,6 @@ router.get('/:place', function(req, res, next) {
     }
 });
 
-String.prototype.toTitleCase = function () {
-    return this.split(' ').map(x => x[0].toUpperCase() + x.substr(1).toLowerCase()).join(' ');
-}
-
 function sendAvailableCitiesFromAPI(city, res) {
     https.get('https://api.meteo.lt/v1/places', response => {
         let result = '';
@@ -38,7 +34,7 @@ function sendAvailableCitiesFromCache(city, res) {
 
 function parseAndFilterCities(city, data) {
     data = JSON.parse(data);
-    data = data.filter(x => x.countryCode === 'LT' && (x.name.startsWith(city) || x.name.startsWith(city.toTitleCase())));
+    data = data.filter(x => x.countryCode === 'LT' && (x.name.toLowerCase().startsWith(city.toLowerCase())));
     data = data.slice(0, 10);
 
     return data;

@@ -52,7 +52,6 @@ export function showCitySuggestions(city) {
         if (response.length) {
             suggestions.innerHTML = '';
             createCitySuggestions(response);
-            hideHistory();
             showSuggestions();
         } else {
             hideSuggestions();
@@ -65,6 +64,7 @@ export function createCitySuggestions(cities) {
     for (let city of cities) {
         let suggestionBox = document.createElement('div');
         suggestionBox.classList.add('suggestion-box', 'd-flex');
+        suggestionBox.setAttribute('data-code', city.code);
         suggestions.appendChild(suggestionBox);
 
         let body = document.createElement('div');
@@ -94,12 +94,11 @@ function updateHistory(city, municipality, code, history) {
         return;
     }
 
-    if (historySuggestions.childElementCount === 10) {
-        historySuggestions.removeChild(historySuggestions.children[9])
-    }
+    rearrangeHistorySuggestions(code);
 
     let suggestionBox = document.createElement('div');
     suggestionBox.classList.add('suggestion-box', 'd-flex');
+    suggestionBox.setAttribute('data-code', code);
     historySuggestions.prepend(suggestionBox);
 
     let icon = document.createElement('div');
@@ -128,12 +127,28 @@ function updateHistory(city, municipality, code, history) {
     });
 }
 
+function rearrangeHistorySuggestions(code) {
+    let historySuggestionBoxes = document.querySelectorAll('.history .suggestion-box');
+
+    if (historySuggestions.childElementCount === 10) {
+        historySuggestions.removeChild(historySuggestions.children[9])
+    }
+
+    for (let suggestionBox of historySuggestionBoxes) {
+        if (suggestionBox.getAttribute('data-code') === code) {
+            historySuggestions.removeChild(suggestionBox);
+        }
+    }
+}
+
 export function showSuggestions() {
+    hideHistory();
     inputGroupText.style.borderBottomLeftRadius = 0;
     suggestions.classList.remove('d-none');
 }
 
 export function hideSuggestions() {
+    suggestions.innerHTML = '';
     inputGroupText.style.borderBottomLeftRadius = '24px';
     suggestions.classList.add('d-none');
 }
@@ -161,12 +176,12 @@ export function updateBlocksByCity(city, history = true) {
         throwError('Neįvestas miestas!');
     }
 
-    city = city.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
     fetchWeatherByCity(city).then(response => {
+        cityInput.value = response.place.name;
         updateBlocks(response);
         updateHistory(response.place.name, response.place.administrativeDivision, response.place.code, history);
-    }).catch(() => {
+    }).catch((e) => {
+        console.log(e);
         throwError('Tokio miesto duomenų bazėje nėra!');
     }).finally(() => {
         toggleWeatherWrapper();
@@ -176,6 +191,18 @@ export function updateBlocksByCity(city, history = true) {
         unitSwitch.checked = false;
         body.style.backgroundColor = 'rgba(45, 56, 70, 1)';
     });
+}
+
+export function extractCodeFromSuggestions(city) {
+    let suggestionCities = document.querySelectorAll('.suggestions.on-top .suggestion-box p.city');
+
+    for (let [index, suggestionCity] of suggestionCities.entries()) {
+        if (suggestionCity.textContent.toLowerCase() === city.toLowerCase()) {
+            let suggestionBox = document.querySelector(`.suggestions.on-top .suggestion-box:nth-child(${index + 1})`);
+
+            return suggestionBox.getAttribute('data-code');
+        }
+    }
 }
 
 function updateBlocks(data) {
