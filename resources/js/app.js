@@ -19,8 +19,7 @@ fetchDefaultCity().then(response => {
     if (response.ip === '::1' || response.country !== 'LT') {
         updateBlocksByCity('Vilnius', false);
     } else {
-        let city = response.city.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
-        updateBlocksByCity(city, false);
+        updateBlocksByCity(response.city, false);
     }
 });
 

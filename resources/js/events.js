@@ -58,8 +58,7 @@ searchButton.addEventListener('click', () => {
     if (suggestions.childElementCount) {
         updateBlocksByCity(extractCodeFromSuggestions(cityInput.value));
     } else {
-        let city = cityInput.value.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
-        updateBlocksByCity(city);
+        updateBlocksByCity(cityInput.value);
     }
 });
 

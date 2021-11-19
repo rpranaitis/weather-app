@@ -33,7 +33,7 @@ function sendAvailableCitiesFromCache(city, res) {
 }
 
 function parseAndFilterCities(city, data) {
-    let normalizedCity = city.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    let normalizedCity = city.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(' ', '-');
 
     data = JSON.parse(data);
     data = data.filter(x => x.countryCode === 'LT' && (x.name.toLowerCase().startsWith(city.toLowerCase()) || x.code.startsWith(normalizedCity)));
