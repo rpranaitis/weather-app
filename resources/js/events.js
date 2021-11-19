@@ -47,9 +47,9 @@ for (let cityLink of cityLinks) {
 
 resetInput.addEventListener('click', () => {
     cityInput.value = '';
-    cityInput.focus();
     hideSuggestions();
     hideResetInput();
+    cityInput.focus();
 });
 
 searchButton.addEventListener('click', () => {
