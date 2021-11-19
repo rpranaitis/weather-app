@@ -14,10 +14,22 @@ Date.prototype.addHours = function (h) {
 }
 
 // Page start
-const defaultCity = 'Kaunas';
-updateBlocksByCity(defaultCity, false);
+
+fetchDefaultCity().then(response => {
+    if (response.ip === '::1' || response.country !== 'LT') {
+        updateBlocksByCity('Vilnius', false);
+    } else {
+        let city = response.city.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        updateBlocksByCity(city, false);
+    }
+});
 
 //
+
+function fetchDefaultCity() {
+    return fetch('./default')
+        .then(response => response.json());
+}
 
 function fetchWeatherByCity(city) {
     return fetch(`./weather/${city}`)

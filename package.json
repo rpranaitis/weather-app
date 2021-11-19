@@ -32,6 +32,7 @@
     "lodash.debounce": "^4.0.8",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15",
+    "request-ip": "^2.1.3",
     "weather-icons": "github:erikflowers/weather-icons"
   },
   "devDependencies": {
