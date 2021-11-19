@@ -1,26 +1,78 @@
-import {defaultModal, modal, cityInput, cityLinks, searchButton, unitSwitch} from './selectors';
-import {updateBlocksByCity, convertTemperatureToF, convertTemperatureToC} from './app';
+import {
+    defaultModal,
+    modal,
+    cityInput,
+    cityLinks,
+    searchButton,
+    unitSwitch,
+    historySuggestions,
+    suggestions, resetInput
+} from './selectors';
 
-window.addEventListener('keyup', event => {
-    if (event.keyCode === 13 && defaultModal.style.display === 'block') {
-        event.preventDefault();
-        modal.toggle();
-        cityInput.focus();
+import {
+    updateBlocksByCity,
+    convertTemperatureToF,
+    convertTemperatureToC,
+    hideSuggestions,
+    showHistory,
+    hideHistory,
+    showCitySuggestions, extractCodeFromSuggestions, showResetInput, hideResetInput
+} from './app';
+
+import debounce from 'lodash.debounce';
+
+document.addEventListener('click', event => {
+    if (event.target.id !== 'cityInput' && event.path[1].id !== 'resetInput') {
+        if (!suggestions.classList.contains('d-none') || !historySuggestions.classList.contains('d-none')) {
+            hideHistory();
+            hideSuggestions();
+        }
+
+        hideResetInput();
     }
 });
 
-defaultModal.addEventListener('hidden.bs.modal', () => {
-    cityInput.focus();
+document.addEventListener('keyup', event => {
+    if (event.keyCode === 13 && defaultModal.style.display === 'block') {
+        event.preventDefault();
+        modal.toggle();
+    }
 });
 
 for (let cityLink of cityLinks) {
     cityLink.addEventListener('click', () => {
-        updateBlocksByCity(cityLink.textContent);
+        updateBlocksByCity(cityLink.getAttribute('data-code'));
     });
 }
 
+resetInput.addEventListener('click', () => {
+    cityInput.value = '';
+    cityInput.focus();
+    hideSuggestions();
+    hideResetInput();
+});
+
 searchButton.addEventListener('click', () => {
-    updateBlocksByCity(cityInput.value);
+    let suggestions = document.querySelector('.suggestions.on-top');
+
+    if (suggestions.childElementCount) {
+        updateBlocksByCity(extractCodeFromSuggestions(cityInput.value));
+    } else {
+        let city = cityInput.value.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        updateBlocksByCity(city);
+    }
+});
+
+cityInput.addEventListener('focus', () => {
+    if (cityInput.value) {
+        showCitySuggestions(cityInput.value);
+        showResetInput();
+    }
+
+    if (historySuggestions.childElementCount && !cityInput.value) {
+        hideSuggestions();
+        showHistory();
+    }
 });
 
 cityInput.addEventListener('keyup', event => {
@@ -38,3 +90,17 @@ unitSwitch.addEventListener('click', () => {
         convertTemperatureToC();
     }
 });
+
+cityInput.addEventListener('input', debounce(() => {
+    if (cityInput.value) {
+        showCitySuggestions(cityInput.value);
+        showResetInput();
+    } else {
+        hideSuggestions();
+        hideResetInput();
+
+        if (historySuggestions.childElementCount) {
+            showHistory();
+        }
+    }
+}, 250));

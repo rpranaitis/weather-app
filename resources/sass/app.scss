@@ -73,6 +73,61 @@ body {
     color: #a8b6cb;
 }
 
+.top {
+    position: relative;
+}
+
+.reset-input {
+    background-color: white;
+    color: silver;
+    padding: 0 10px;
+}
+
+.suggestions {
+    margin: 0;
+    border-top: 1px solid #e5e5e5;
+    position: absolute;
+    width: 100%;
+}
+
+.suggestions .icon {
+    color: #b2b2b2;
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.suggestions .suggestion-box {
+    background-color: white;
+    margin: 0;
+    width: 100%;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.on-top {
+    z-index: 999;
+}
+
+.suggestions .suggestion-box:hover {
+    background-color: rgb(235, 235, 235);
+}
+
+.suggestions p {
+    margin: 0;
+}
+
+.suggestions p.city {
+    font-size: 16px;
+    color: #354256;
+    font-weight: bold;
+}
+
+.suggestions p.municipality {
+    font-size: 13px;
+    color: #858585;
+    font-style: italic;
+}
+
 .btn {
     border-radius: 0;
     font-size: 16px;

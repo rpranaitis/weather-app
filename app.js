@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/weather/places', weatherRouter);
+app.use('/weather', weatherRouter);
 
 fsExtra.emptyDirSync('./cache');
 
