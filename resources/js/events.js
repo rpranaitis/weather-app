@@ -22,7 +22,7 @@ import {
 import debounce from 'lodash.debounce';
 
 document.addEventListener('click', event => {
-    if (event.target.id !== 'cityInput' && event.path[1].id !== 'resetInput') {
+    if (event.target.id !== 'cityInput' && !resetInput.contains(event.target)) {
         if (!suggestions.classList.contains('d-none') || !historySuggestions.classList.contains('d-none')) {
             hideHistory();
             hideSuggestions();
