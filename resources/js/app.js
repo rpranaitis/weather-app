@@ -85,6 +85,7 @@ export function createCitySuggestions(cities) {
             hideSuggestions();
             hideHistory();
             updateBlocksByCity(city.code);
+            cityInput.value = city.name;
         });
     }
 }
@@ -124,6 +125,7 @@ function updateHistory(city, municipality, code, history) {
         hideSuggestions();
         hideHistory();
         updateBlocksByCity(code);
+        cityInput.value = city;
     });
 }
 
@@ -173,15 +175,14 @@ export function updateBlocksByCity(city, history = true) {
     if (!city) {
         toggleSpinnerBlock();
         body.style.backgroundColor = 'rgba(45, 56, 70, 1)';
-        throwError('Neįvestas miestas!');
+
+        return throwError('Neįvestas miestas!');
     }
 
     fetchWeatherByCity(city).then(response => {
-        cityInput.value = response.place.name;
         updateBlocks(response);
         updateHistory(response.place.name, response.place.administrativeDivision, response.place.code, history);
-    }).catch((e) => {
-        console.log(e);
+    }).catch(() => {
         throwError('Tokio miesto duomenų bazėje nėra!');
     }).finally(() => {
         toggleWeatherWrapper();
