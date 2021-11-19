@@ -7,6 +7,7 @@ export let inputGroupText = document.querySelector('.input-group-text');
 
 export let suggestions = document.querySelector('.suggestions');
 export let historySuggestions = document.querySelector('.history');
+export let resetInput = document.querySelector('.reset-input');
 
 export let modal = new bootstrap.Modal(document.querySelector('.modal'), {})
 export let defaultModal = document.querySelector('.modal');

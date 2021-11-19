@@ -6,7 +6,7 @@ import {
     searchButton,
     unitSwitch,
     historySuggestions,
-    suggestions
+    suggestions, resetInput
 } from './selectors';
 
 import {
@@ -16,21 +16,23 @@ import {
     hideSuggestions,
     showHistory,
     hideHistory,
-    showCitySuggestions, extractCodeFromSuggestions
+    showCitySuggestions, extractCodeFromSuggestions, showResetInput, hideResetInput
 } from './app';
 
 import debounce from 'lodash.debounce';
 
-window.addEventListener('click', event => {
-    if (!suggestions.classList.contains('d-none') || !historySuggestions.classList.contains('d-none')) {
-        if (event.target.id !== 'cityInput') {
+document.addEventListener('click', event => {
+    if (event.target.id !== 'cityInput' && event.path[1].id !== 'resetInput') {
+        if (!suggestions.classList.contains('d-none') || !historySuggestions.classList.contains('d-none')) {
             hideHistory();
             hideSuggestions();
         }
+
+        hideResetInput();
     }
 });
 
-window.addEventListener('keyup', event => {
+document.addEventListener('keyup', event => {
     if (event.keyCode === 13 && defaultModal.style.display === 'block') {
         event.preventDefault();
         modal.toggle();
@@ -43,24 +45,31 @@ for (let cityLink of cityLinks) {
     });
 }
 
+resetInput.addEventListener('click', () => {
+    cityInput.value = '';
+    cityInput.focus();
+    hideResetInput();
+});
+
 searchButton.addEventListener('click', () => {
     let suggestions = document.querySelector('.suggestions.on-top');
 
     if (suggestions.childElementCount) {
-        console.log('test');
         updateBlocksByCity(extractCodeFromSuggestions(cityInput.value));
     } else {
-        updateBlocksByCity(cityInput.value);
+        let city = cityInput.value.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        updateBlocksByCity(city);
     }
 });
 
 cityInput.addEventListener('focus', () => {
     if (cityInput.value) {
         showCitySuggestions(cityInput.value);
+        showResetInput();
     }
 
     if (historySuggestions.childElementCount && !cityInput.value) {
-        hideSuggestions()
+        hideSuggestions();
         showHistory();
     }
 });
@@ -81,14 +90,16 @@ unitSwitch.addEventListener('click', () => {
     }
 });
 
-cityInput.addEventListener('input', debounce(function() {
+cityInput.addEventListener('input', debounce(() => {
     if (cityInput.value) {
         showCitySuggestions(cityInput.value);
+        showResetInput();
     } else {
         hideSuggestions();
+        hideResetInput();
 
         if (historySuggestions.childElementCount) {
             showHistory();
         }
     }
-}, 150));
+}, 250));

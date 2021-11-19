@@ -4,7 +4,7 @@ import OtherWeatherParameters from "./updates/OtherWeatherParameters";
 
 import {
     body, cityElement, cityInput, defaultModal, defaultModalText, modal, municipalityElement, suggestions, spinnerBlock,
-    temperatures, unitSwitch, weatherWrapper, inputGroupText, historySuggestions
+    temperatures, unitSwitch, weatherWrapper, inputGroupText, historySuggestions, resetInput
 } from "./selectors";
 
 Date.prototype.addHours = function (h) {
@@ -84,6 +84,7 @@ export function createCitySuggestions(cities) {
         suggestionBox.addEventListener('click', () => {
             hideSuggestions();
             hideHistory();
+            hideResetInput();
             updateBlocksByCity(city.code);
             cityInput.value = city.name;
         });
@@ -124,6 +125,7 @@ function updateHistory(city, municipality, code, history) {
     suggestionBox.addEventListener('click', () => {
         hideSuggestions();
         hideHistory();
+        hideResetInput();
         updateBlocksByCity(code);
         cityInput.value = city;
     });
@@ -163,6 +165,16 @@ export function showHistory() {
 export function hideHistory() {
     inputGroupText.style.borderBottomLeftRadius = '24px';
     historySuggestions.classList.add('d-none');
+}
+
+export function showResetInput() {
+    resetInput.classList.remove('d-none');
+    resetInput.classList.add('d-flex');
+}
+
+export function hideResetInput() {
+    resetInput.classList.add('d-none');
+    resetInput.classList.remove('d-flex');
 }
 
 export function updateBlocksByCity(city, history = true) {
