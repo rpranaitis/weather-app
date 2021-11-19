@@ -44,7 +44,7 @@ export default class Temperature {
         'moderate-snow':    'Sniegas',
         'heavy-snow':       'Smarkus sniegas',
         'fog':              'Rūkas',
-        'na':               'Rro sąlygos nenustatyto'
+        'na':               'Oro sąlygos nenustatytos'
     }
 
     updateTemperatureBlock(data) {
