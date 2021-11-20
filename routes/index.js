@@ -3,7 +3,6 @@ const https = require('https');
 const router = express.Router();
 const requestIp = require('request-ip');
 const fs = require('fs');
-const fsExtra = require('fs-extra');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -13,16 +12,6 @@ router.get('/', function(req, res, next) {
 router.get('/default', function(req, res, next) {
   let ip = extractIp(requestIp.getClientIp(req));
 
-  if (fs.existsSync(`./cache/default-cities/${ip}.json`)) {
-    sendDefaultCityFromCache(ip, res);
-  } else {
-    sendDefaultCityFromAPI(ip, res);
-  }
-
-  fsExtra.remove('./cache/available-cities.json');
-});
-
-function sendDefaultCityFromAPI(ip, res) {
   https.get(`https://ipinfo.io/${ip}`, response => {
     let result = '';
 
@@ -31,20 +20,26 @@ function sendDefaultCityFromAPI(ip, res) {
     });
 
     response.on('end', () => {
-      // fs.writeFileSync(`./cache/default-cities/${ip}.json`, result);
-      fs.writeFile(`./cache/default-cities/${ip}.json`, result, { flag: 'wx' }, error => {
-        res.send(JSON.parse(result));
-      });
+      res.send(JSON.parse(result));
+    });
+  });
+
+  cacheAvailableCities();
+});
+
+function cacheAvailableCities() {
+  https.get('https://api.meteo.lt/v1/places', response => {
+    let result = '';
+
+    response.on('data', data => {
+      result += data.toString();
+    });
+
+    response.on('end', () => {
+      fs.writeFileSync('./cache/available-cities.json', result);
     });
   });
 }
-
-function sendDefaultCityFromCache(ip, res) {
-  let data = fs.readFileSync(`./cache/default-cities/${ip}.json`, 'utf8');
-
-  res.send(JSON.parse(data));
-}
-
 
 function extractIp(ip) {
   if (ip.substr(0, 7) === '::ffff:') {

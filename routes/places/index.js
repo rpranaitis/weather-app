@@ -1,36 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const https = require('https');
 const fs = require('fs');
 
 router.get('/:place', function(req, res, next) {
     if (fs.existsSync('./cache/available-cities.json')) {
-        sendAvailableCitiesFromCache(req.params['place'], res);
+        let data = fs.readFileSync('./cache/available-cities.json', 'utf8');
+
+        res.send(parseAndFilterCities(req.params['place'], data));
     } else {
-        sendAvailableCitiesFromAPI(req.params['place'], res)
+        res.send({ error: 404 });
     }
 });
-
-function sendAvailableCitiesFromAPI(city, res) {
-    https.get('https://api.meteo.lt/v1/places', response => {
-        let result = '';
-
-        response.on('data', data => {
-            result += data.toString();
-        });
-
-        response.on('end', () => {
-            fs.writeFileSync('./cache/available-cities.json', result);
-            res.send(parseAndFilterCities(city, result));
-        });
-    });
-}
-
-function sendAvailableCitiesFromCache(city, res) {
-    let data = fs.readFileSync('./cache/available-cities.json', 'utf8');
-
-    res.send(parseAndFilterCities(city, data));
-}
 
 function parseAndFilterCities(city, data) {
     let normalizedCity = city.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(' ', '-');
