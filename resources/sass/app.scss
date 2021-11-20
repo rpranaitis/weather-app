@@ -263,6 +263,7 @@ hr {
     border-radius: 10px;
     font-size: 18px;
     transition: opacity .5s ease-out;
+    -webkit-transition: opacity .5s ease-out;
     opacity: 0;
     overflow: hidden;
 }
