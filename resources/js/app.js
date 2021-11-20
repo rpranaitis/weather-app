@@ -16,10 +16,10 @@ Date.prototype.addHours = function (h) {
 // Page start
 
 fetchDefaultCity().then(response => {
-    if (response.ip === '::1' || response.country !== 'LT') {
-        updateBlocksByCity('Vilnius', false);
-    } else {
+    if (response.ip !== '::1' && response.country === 'LT' && response.city) {
         updateBlocksByCity(response.city, false);
+    } else {
+        updateBlocksByCity('Vilnius', false);
     }
 });
 
@@ -232,7 +232,7 @@ export function extractCodeFromSuggestions(city) {
 }
 
 function updateBlocks(data) {
-    cityElement.innerHTML = `<i class="fas fa-location-arrow"></i> ${data.place.name}`
+    cityElement.innerHTML = `<i class="fab fa-periscope"></i> ${data.place.name}`
     municipalityElement.textContent = data.place.administrativeDivision;
 
     let filteredTimestamps = getFilteredTimestamps(data);
