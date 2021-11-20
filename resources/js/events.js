@@ -53,6 +53,8 @@ resetInput.addEventListener('click', () => {
 });
 
 searchButton.addEventListener('click', () => {
+    hideSuggestions();
+
     let suggestions = document.querySelector('.suggestions.on-top');
 
     if (suggestions.childElementCount) {
