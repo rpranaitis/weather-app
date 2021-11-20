@@ -259,7 +259,7 @@ hr {
     outline: none;
     background-color: #2d3846;
     color: white;
-    padding: 15px;
+    padding: 30px;
     border-radius: 10px;
     font-size: 18px;
     transition: opacity .5s ease-out;
@@ -269,10 +269,6 @@ hr {
 
 .active {
     opacity: .7 !important;
-}
-
-.active:hover {
-    opacity: 1 !important;
 }
 
 @media only screen and (min-width: 992px) {
