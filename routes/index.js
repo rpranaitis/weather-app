@@ -5,11 +5,11 @@ const requestIp = require('request-ip');
 const fs = require('fs');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+router.get('/', function (req, res, next) {
+    res.render('index', {title: 'Express'});
 });
 
-router.get('/default', function(req, res, next) {
+router.get('/default', function (req, res, next) {
     let ip = extractIp(requestIp.getClientIp(req));
 
     if (fs.existsSync(`./cache/default-cities/${ip}.json`)) {

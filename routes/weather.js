@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.use('/places', require('./places/index'));
 
-router.get('/:place', function(req, res, next) {
+router.get('/:place', function (req, res, next) {
     let place = req.params['place'];
     let normalizedPlace = place.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(' ', '-');
 

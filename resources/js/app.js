@@ -16,7 +16,7 @@ Date.prototype.addHours = function (h) {
 // Page start
 
 fetchDefaultCity().then(response => {
-    if (response.ip !== '::1' && response.country === 'LT' && response.city) {
+    if (response.country === 'LT' && response.city) {
         updateBlocksByCity(response.city, false);
     } else {
         updateBlocksByCity('Vilnius', false);
