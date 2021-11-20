@@ -49,7 +49,7 @@ export default class OtherWeatherParameters {
         let compass = this.degToCompass(data[0].windDirection);
 
         degrees.textContent = this.windDirectionTranslator[compass];
-        icon.innerHTML = `<i class="wi wi-wind towards-${closestDegree}-deg" title="Ši ikonėlė keičiasi pagal vėjo kryptį"></i>`;
+        icon.innerHTML = `<i class="wi wi-wind towards-${closestDegree}-deg"></i>`;
     }
 
     updateCloudCover(data) {
