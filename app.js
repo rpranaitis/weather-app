@@ -18,6 +18,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/weather', weatherRouter);
 
-fsExtra.remove('./cache/available-cities.json');
+// fsExtra.remove('./cache/available-cities.json');
 
 module.exports = app;
