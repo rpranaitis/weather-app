@@ -7,7 +7,7 @@ HTML / CSS / SCSS / JavaScript / NodeJS
 • Oro temperatūra atvaizduojama nuo dabartinio laiko kas valandą 11 valandų į priekį. Galima keisti laipsnius iš celsijų į farenheitus.\
 • Temperatūros bloko ikonos yra dviejų tipų: dieninės ir naktinės (naktinės veikia nuo 20:00 iki 07:00). Užvedus ant ikonos ir ilgiau palaukus matoma jos antraštė.\
 • Parametrų bloke vėjo greitis rodomas raudona spalva jeigu yra didesnis nei 10 m/s.\
-• Parametrų bloke vėjo krypties ikona keičiasi pagal vėjo kryptį, o kadangi meteo.lt API grąžina laipsnius, tai laipsniai konvertuojami į raides (Š, ŠR, PV, V ir t.t.).
+• Parametrų bloke vėjo krypties ikona keičiasi pagal vėjo kryptį, o kadangi meteo.lt API grąžina laipsnius, tai laipsniai konvertuojami į raides.
 
 # Paieškos blokas:
 
