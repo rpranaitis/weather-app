@@ -18,6 +18,7 @@ HTML / CSS / SCSS / JavaScript / NodeJS
 ✓ Ieškoti galima dviem būdais: paspaudžiant „Enter“ klavišą arba spaudžiant „Ieškoti“ mygtuką.\
 ✓ Jeigu bandome ieškoti neįvesto miesto gauname klaidą „Neįvestas miestas“.\
 ✓ Jeigu rankiniu būdu įvedame miestą ir toks miestas neegzistuoja gauname klaidą „Tokio miesto duomenų bazėje nėra“.\
-✓ Klaidos langą galima išjungti 3 būdais: X paspaudimu, mygtuku „Uždaryti“ arba tiesiog paspausdami „Enter“ klavišą.
+✓ Klaidos langą galima išjungti 3 būdais: X paspaudimu, mygtuku „Uždaryti“ arba tiesiog paspausdami „Enter“ klavišą.\
+✓ Mobilioje versijoje pateikus užklausą įvyksta automatinis „scrollinimas“ į apačią, paėjus dar žemiau atsiranda mygtukas, kurį paspaudus grįžtame į viršų.
 
 Puslapis turi skirtingas versijas pritaikytas mobiliesiems telefonams, planšetėms ir kompiuteriams.
