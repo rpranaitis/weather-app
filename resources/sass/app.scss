@@ -2,6 +2,10 @@
 @import '~weather-icons/sass/weather-icons';
 @import '~weather-icons/css/weather-icons-wind';
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-size: 16px;
     background-color: rgba(45, 56, 70, 1);
@@ -263,7 +267,6 @@ hr {
     border-radius: 10px;
     font-size: 18px;
     transition: opacity .5s ease-out;
-    -webkit-transition: opacity .5s ease-out;
     opacity: 0;
     overflow: hidden;
 }
