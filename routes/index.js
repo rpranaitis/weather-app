@@ -3,6 +3,7 @@ const https = require('https');
 const router = express.Router();
 const requestIp = require('request-ip');
 const fs = require('fs');
+const fsExtra = require('fs-extra');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -17,6 +18,8 @@ router.get('/default', function(req, res, next) {
   } else {
     sendDefaultCityFromAPI(ip, res);
   }
+
+  fsExtra.remove('./cache/available-cities.json');
 });
 
 function sendDefaultCityFromAPI(ip, res) {
