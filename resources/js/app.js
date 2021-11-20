@@ -307,7 +307,9 @@ export function scrollToCity() {
 }
 
 export function scrollFunction() {
-    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    let position = rightSide.offsetTop + 20;
+
+    if (document.body.scrollTop > position || document.documentElement.scrollTop > position) {
         scrollToTopButton.classList.add('active');
     } else {
         scrollToTopButton.classList.remove('active');
