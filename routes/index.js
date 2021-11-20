@@ -3,6 +3,9 @@ const https = require('https');
 const router = express.Router();
 const requestIp = require('request-ip');
 const fs = require('fs');
+const fsExtra = require('fs-extra');
+
+fsExtra.remove('./cache/available-cities.json');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
