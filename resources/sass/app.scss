@@ -250,6 +250,31 @@ hr {
     font-size: 38px;
 }
 
+#scrollToTopButton {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #2d3846;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 18px;
+    transition: opacity .5s ease-out;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.active {
+    opacity: .7 !important;
+}
+
+.active:hover {
+    opacity: 1 !important;
+}
+
 @media only screen and (min-width: 992px) {
     .cities ul {
         width: 88.77px;

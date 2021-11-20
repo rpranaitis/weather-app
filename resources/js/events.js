@@ -6,7 +6,7 @@ import {
     searchButton,
     unitSwitch,
     historySuggestions,
-    suggestions, resetInput
+    suggestions, resetInput, scrollToTopButton
 } from './selectors';
 
 import {
@@ -16,10 +16,18 @@ import {
     hideSuggestions,
     showHistory,
     hideHistory,
-    showCitySuggestions, extractCodeFromSuggestions, showResetInput, hideResetInput
+    showCitySuggestions,
+    extractCodeFromSuggestions,
+    showResetInput,
+    hideResetInput,
+    scrollToCity,
+    scrollFunction,
+    scrollToTop
 } from './app';
 
 import debounce from 'lodash.debounce';
+
+window.onscroll = () => scrollFunction();
 
 document.addEventListener('click', event => {
     if (event.target.id !== 'cityInput' && !resetInput.contains(event.target)) {
@@ -44,6 +52,8 @@ for (let cityLink of cityLinks) {
         updateBlocksByCity(cityLink.getAttribute('data-code'));
     });
 }
+
+scrollToTopButton.addEventListener('click', () => scrollToTop());
 
 resetInput.addEventListener('click', () => {
     cityInput.value = '';

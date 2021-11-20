@@ -5,6 +5,9 @@ export let cityInput = document.querySelector('#cityInput');
 export let searchButton = document.querySelector('#searchButton');
 export let inputGroupText = document.querySelector('.input-group-text');
 
+export let rightSide = document.querySelector('.right-side');
+export let scrollToTopButton = document.querySelector('#scrollToTopButton');
+
 export let suggestions = document.querySelector('.suggestions');
 export let historySuggestions = document.querySelector('.history');
 export let resetInput = document.querySelector('.reset-input');

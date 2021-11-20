@@ -3,8 +3,22 @@ import Temperature from "./updates/Temperature";
 import OtherWeatherParameters from "./updates/OtherWeatherParameters";
 
 import {
-    body, cityElement, cityInput, defaultModal, defaultModalText, modal, municipalityElement, suggestions, spinnerBlock,
-    temperatures, unitSwitch, weatherWrapper, inputGroupText, historySuggestions, resetInput
+    body,
+    cityElement,
+    cityInput,
+    defaultModal,
+    defaultModalText,
+    historySuggestions,
+    inputGroupText,
+    modal,
+    municipalityElement,
+    resetInput,
+    rightSide, scrollToTopButton,
+    spinnerBlock,
+    suggestions,
+    temperatures,
+    unitSwitch,
+    weatherWrapper
 } from "./selectors";
 
 Date.prototype.addHours = function (h) {
@@ -17,9 +31,9 @@ Date.prototype.addHours = function (h) {
 
 fetchDefaultCity().then(response => {
     if (response.country === 'LT' && response.city) {
-        updateBlocksByCity(response.city, false);
+        updateBlocksByCity(response.city, false, false);
     } else {
-        updateBlocksByCity('Vilnius', false);
+        updateBlocksByCity('Vilnius', false, false);
     }
 });
 
@@ -188,10 +202,9 @@ export function hideResetInput() {
     resetInput.classList.remove('d-flex');
 }
 
-export function updateBlocksByCity(city, history = true) {
+export function updateBlocksByCity(city, history = true, scroll = true) {
     if (spinnerBlock.classList.contains('d-none')) {
         body.style.backgroundColor = 'rgba(45, 56, 70, .4)';
-        document.documentElement.scrollTop = 0;
         toggleSpinnerBlock();
     }
 
@@ -210,6 +223,10 @@ export function updateBlocksByCity(city, history = true) {
     }).finally(() => {
         toggleWeatherWrapper();
         toggleSpinnerBlock();
+
+        if (scroll) {
+            scrollToCity();
+        }
 
         cityInput.disabled = false;
         unitSwitch.checked = false;
@@ -283,4 +300,23 @@ function getFutureDateTimes() {
     }
 
     return dateTimes;
+}
+
+export function scrollToCity() {
+    document.documentElement.scrollTop = rightSide.offsetTop;
+}
+
+export function scrollFunction() {
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        scrollToTopButton.classList.add('active');
+    } else {
+        scrollToTopButton.classList.remove('active');
+    }
+}
+
+export function scrollToTop() {
+    document.documentElement.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    })
 }
