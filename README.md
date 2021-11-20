@@ -1,7 +1,7 @@
 # weather-app
 HTML / CSS / SCSS / JavaScript / NodeJS
 
-# Puslapio funkcionalumas (orų blokas):
+# Orų blokas:
 
 • Pirmame puslapyje automatiškai užsikrauna miestas pagal jūsų IP lokaciją (jei esate ne iš Lietuvos arba įvyksta klaidų grąžinant miestą - pagal nutylėjimą nustatomas Vilniaus miestas), atidarius puslapį iš naujo, užsikrauna paskutinis žiūrėtas miestas.\
 • Oro temperatūra atvaizduojama nuo dabartinio laiko kas valandą 11 valandų į priekį. Galima keisti laipsnius iš celsijų į farenheitus.\
@@ -9,7 +9,7 @@ HTML / CSS / SCSS / JavaScript / NodeJS
 • Parametrų bloke vėjo greitis rodomas raudona spalva jeigu yra didesnis nei 10 m/s.\
 • Parametrų bloke vėjo krypties ikona keičiasi pagal vėjo kryptį, o kadangi meteo.lt API grąžina laipsnius, tai laipsniai konvertuojami į raides (Š, ŠR, PV, V ir t.t.).\
 
-# Puslapio funkcionalumas (paieškos blokas):
+# Paieškos blokas:
 
 • Paspaudus ant paieškos laukelio yra išmetamas prieš tai ieškotų miestų sąrašas.\
 • Pradėjus rašyti atsiranda ikona, kurią paspaudus galima ištrinti visą parašytą tekstą.\
