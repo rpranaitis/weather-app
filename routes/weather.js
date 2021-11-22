@@ -29,9 +29,10 @@ function cacheDefaultCity(req) {
     let ip = extractIp(requestIp.getClientIp(req));
 
     let result = {
-        ip: ip,
-        country: 'LT',
-        city: req.params['place']
+        address: {
+            city: req.params['place'],
+            country_code: 'lt'
+        }
     };
 
     fs.writeFileSync(`./cache/default-cities/${ip}.json`, JSON.stringify(result));

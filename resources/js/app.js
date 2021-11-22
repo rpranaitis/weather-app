@@ -29,18 +29,39 @@ Date.prototype.addHours = function (h) {
 
 // Page start
 
-fetchDefaultCity().then(response => {
-    if (response.country === 'LT' && response.city) {
-        updateBlocksByCity(response.city, false, false);
-    } else {
-        updateBlocksByCity('Vilnius', false, false);
-    }
+navigator.geolocation.getCurrentPosition(function(position) {
+    let lat = position.coords.latitude;
+    let long = position.coords.longitude;
+
+    fetchDefaultCity(lat, long).then(response => {
+        if (response.address.country_code === 'lt' && getLocationPlace(response)) {
+            updateBlocksByCity(getLocationPlace(response), false, false);
+        } else {
+            updateBlocksByCity('Vilnius', false, false);
+        }
+    });
 });
+
+function getLocationPlace(data) {
+    if (data.address.village) {
+        return data.address.village;
+    }
+
+    if (data.address.town) {
+        return data.address.town;
+    }
+
+    if (data.address.city) {
+        return data.address.city;
+    }
+
+    return null;
+}
 
 //
 
-function fetchDefaultCity() {
-    return fetch('./default')
+function fetchDefaultCity(lat, long) {
+    return fetch(`./default/${lat}/${long}`)
         .then(response => response.json());
 }
 

@@ -9,13 +9,13 @@ router.get('/', function (req, res, next) {
     res.render('index', {title: 'Express'});
 });
 
-router.get('/default', function (req, res, next) {
+router.get('/default/:lat/:long', function (req, res, next) {
     let ip = extractIp(requestIp.getClientIp(req));
 
     if (fs.existsSync(`./cache/default-cities/${ip}.json`)) {
         sendDefaultCityFromCache(ip, res);
     } else {
-        sendDefaultCityFromAPI(ip, res);
+        sendDefaultCityFromAPI(ip, req, res);
     }
 
     cacheAvailableCities();
@@ -27,8 +27,8 @@ function sendDefaultCityFromCache(ip, res) {
     res.send(data);
 }
 
-function sendDefaultCityFromAPI(ip, res) {
-    https.get(`https://ipinfo.io/${ip}`, response => {
+function sendDefaultCityFromAPI(ip, req, res) {
+    https.get(`https://us1.locationiq.com/v1/reverse.php?key=pk.ecfe765069c598243f34f07ff691adc2&lat=${req.params['lat']}&lon=${req.params['long']}&format=json`, response => {
         let result = '';
 
         response.on('data', data => {
