@@ -21,7 +21,7 @@ import {
 
 import {scrollToCity} from "./tools/scroll";
 import {updateHistory} from "./tools/history";
-import {fetchDefaultCity, fetchWeatherByCity} from "./tools/ajax";
+import {fetchAvailableCities, fetchDefaultCity, fetchWeatherByCity} from "./tools/ajax";
 
 Date.prototype.addHours = function (h) {
     this.setHours(this.getHours() + h);
@@ -36,15 +36,18 @@ navigator.geolocation.getCurrentPosition(function(position) {
     let long = position.coords.longitude;
 
     fetchDefaultCity(lat, long).then(response => {
-        if (response.address.country_code === 'lt' && getLocationPlace(response)) {
-            updateBlocksByCity(getLocationPlace(response), false, false);
-        } else {
-            updateBlocksByCity('Vilnius', false, false);
-        }
+        let locationCity = extractLocationPlace(response);
+        fetchAvailableCities(locationCity).then(res => {
+            if (response.address.country_code === 'lt' && locationCity && res.length) {
+                updateBlocksByCity(locationCity, false, false);
+            } else {
+                updateBlocksByCity('Vilnius', false, false);
+            }
+        });
     });
 });
 
-function getLocationPlace(data) {
+function extractLocationPlace(data) {
     if (data.address.village) {
         return data.address.village;
     }
