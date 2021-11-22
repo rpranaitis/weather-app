@@ -36,6 +36,7 @@ function sendDefaultCityFromAPI(ip, res) {
         });
 
         response.on('end', () => {
+            fs.writeFileSync(`./cache/default-cities/${ip}.json`, result);
             res.send(JSON.parse(result));
         });
     });
