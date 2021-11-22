@@ -10,22 +10,23 @@ import {
 } from './selectors';
 
 import {
-    updateBlocksByCity,
-    convertTemperatureToF,
-    convertTemperatureToC,
-    hideSuggestions,
-    showHistory,
-    hideHistory,
-    showCitySuggestions,
-    extractCodeFromSuggestions,
-    showResetInput,
-    hideResetInput,
-    scrollToCity,
-    scrollFunction,
-    scrollToTop
+    updateBlocksByCity
 } from './app';
 
 import debounce from 'lodash.debounce';
+import {convertTemperatureToC, convertTemperatureToF} from "./tools/units-converter";
+
+import {
+    hideHistory,
+    hideResetInput,
+    hideSuggestions,
+    showCitySuggestions,
+    showHistory,
+    showResetInput
+} from "./tools/show-hide";
+
+import {scrollFunction, scrollToTop} from "./tools/scroll";
+import {extractCodeFromSuggestions} from "./tools/suggestions";
 
 window.onscroll = () => scrollFunction();
 
@@ -55,13 +56,6 @@ for (let cityLink of cityLinks) {
 
 scrollToTopButton.addEventListener('click', () => scrollToTop());
 
-resetInput.addEventListener('click', () => {
-    cityInput.value = '';
-    hideSuggestions();
-    hideResetInput();
-    cityInput.focus();
-});
-
 searchButton.addEventListener('click', () => {
     hideSuggestions();
 
@@ -74,6 +68,14 @@ searchButton.addEventListener('click', () => {
     }
 });
 
+unitSwitch.addEventListener('click', () => {
+    if (unitSwitch.checked) {
+        convertTemperatureToF();
+    } else {
+        convertTemperatureToC();
+    }
+});
+
 cityInput.addEventListener('focus', () => {
     if (cityInput.value) {
         showCitySuggestions(cityInput.value);
@@ -83,22 +85,6 @@ cityInput.addEventListener('focus', () => {
     if (historySuggestions.childElementCount && !cityInput.value) {
         hideSuggestions();
         showHistory();
-    }
-});
-
-cityInput.addEventListener('keyup', event => {
-    if (event.keyCode === 13) {
-        event.preventDefault();
-        cityInput.disabled = true;
-        searchButton.click();
-    }
-});
-
-unitSwitch.addEventListener('click', () => {
-    if (unitSwitch.checked) {
-        convertTemperatureToF();
-    } else {
-        convertTemperatureToC();
     }
 });
 
@@ -115,3 +101,18 @@ cityInput.addEventListener('input', debounce(() => {
         }
     }
 }, 250));
+
+cityInput.addEventListener('keyup', event => {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        cityInput.disabled = true;
+        searchButton.click();
+    }
+});
+
+resetInput.addEventListener('click', () => {
+    cityInput.value = '';
+    hideSuggestions();
+    hideResetInput();
+    cityInput.focus();
+});
