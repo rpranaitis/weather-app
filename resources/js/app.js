@@ -21,7 +21,7 @@ import {
 
 import {scrollToCity} from "./tools/scroll";
 import {updateHistory} from "./tools/history";
-import {fetchAvailableCities, fetchDefaultCity, fetchWeatherByCity} from "./tools/ajax";
+import {fetchWeatherByCity} from "./tools/ajax";
 
 Date.prototype.addHours = function (h) {
     this.setHours(this.getHours() + h);
@@ -31,37 +31,7 @@ Date.prototype.addHours = function (h) {
 
 // Page start
 
-navigator.geolocation.getCurrentPosition(function(position) {
-    let lat = position.coords.latitude;
-    let long = position.coords.longitude;
-
-    fetchDefaultCity(lat, long).then(response => {
-        let locationCity = extractLocationPlace(response);
-        fetchAvailableCities(locationCity).then(res => {
-            if (response.address.country_code === 'lt' && locationCity && res.length) {
-                updateBlocksByCity(locationCity, false, false);
-            } else {
-                updateBlocksByCity('Vilnius', false, false);
-            }
-        });
-    });
-});
-
-function extractLocationPlace(data) {
-    if (data.address.village) {
-        return data.address.village;
-    }
-
-    if (data.address.town) {
-        return data.address.town;
-    }
-
-    if (data.address.city) {
-        return data.address.city;
-    }
-
-    return null;
-}
+updateBlocksByCity('Vilnius', false, false);
 
 //
 
@@ -121,7 +91,7 @@ function getFutureDateTimes() {
 
     for (let i = 0; i < 12; i++) {
         let addedHours = new Date().addHours(i);
-        let futureDate = addedHours.toLocaleDateString('en-CA');
+        let futureDate = addedHours.toLocaleDateString('lt');
         let futureTime = addedHours.toLocaleTimeString().slice(0, 2) + ':00:00';
 
         dateTimes.push(`${futureDate} ${futureTime}`)

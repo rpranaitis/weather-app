@@ -20,10 +20,6 @@ app.use('/weather', weatherRouter);
 
 if (!fs.existsSync('./cache')){
     fs.mkdirSync('./cache');
-
-    if (!fs.existsSync('./cache/default-cities')) {
-        fs.mkdirSync('./cache/default-cities');
-    }
 }
 
 module.exports = app;

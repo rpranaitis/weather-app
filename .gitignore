@@ -13,4 +13,3 @@ node_modules
 /public/mix.js.map
 
 /cache/available-cities.json
-/cache/default-cities

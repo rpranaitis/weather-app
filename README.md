@@ -3,7 +3,6 @@ HTML / CSS / SCSS / JavaScript / NodeJS
 
 # Orų blokas:
 
-✓ Pirmame puslapyje automatiškai užsikrauna miestas pagal jūsų įrenginio lokaciją (jei esate ne iš Lietuvos arba įvyksta klaidų grąžinant miestą - pagal nutylėjimą nustatomas Vilniaus miestas).\
 ✓ Oro temperatūra atvaizduojama nuo dabartinio laiko kas valandą 11 valandų į priekį. Galima keisti laipsnius iš celsijų į farenheitus.\
 ✓ Temperatūros bloko ikonos yra dviejų tipų: dieninės ir naktinės (naktinės veikia nuo 20:00 iki 07:00). Užvedus ant ikonos ir ilgiau palaukus matoma jos antraštė.\
 ✓ Parametrų bloke vėjo greitis rodomas raudona spalva jeigu yra didesnis nei 10 m/s.\
