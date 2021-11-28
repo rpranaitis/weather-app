@@ -50,6 +50,7 @@ export function updateBlocksByCity(city, history = true, scroll = true) {
         updateBlocks(response);
         updateHistory(response.place.name, response.place.administrativeDivision, response.place.code, history);
     }).catch(() => {
+        scroll = false;
         throwError('Tokio miesto duomenų bazėje nėra!');
     }).finally(() => {
         toggleWeatherWrapper();
