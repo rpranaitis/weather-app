@@ -33,8 +33,6 @@ Date.prototype.addHours = function (h) {
 
 updateBlocksByCity('Vilnius', false, false);
 
-//
-
 export function updateBlocksByCity(city, history = true, scroll = true) {
     if (spinnerBlock.classList.contains('d-none')) {
         body.style.backgroundColor = 'rgba(45, 56, 70, .4)';
